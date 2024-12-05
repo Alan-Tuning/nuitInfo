@@ -11,16 +11,10 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: 20
-    - name : list files
-      run : |
-        ls
-        cd front_end
-        ls
-        pwd
     - name: Install dependencies
       run: |
             ls
-            cd front_end
+            cd front-end
             npm install
             npm run build
     - name : transfert_files
