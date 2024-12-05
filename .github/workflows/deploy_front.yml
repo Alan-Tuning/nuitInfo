@@ -13,6 +13,7 @@ jobs:
         node-version: 20
     - name: Install dependencies
       run: |
+            cd front_end
             npm install
             npm run build
     - name : transfert_files
