@@ -23,6 +23,6 @@ jobs:
         host: ssh-alantuning.alwaysdata.net
         username: alantuning_secret
         password: saucisse
-        source: "front_end/dist/"
-        target: /home/alantuning
+        source: "./front_end/dist/"
+        target: "~/alantuning"
     
