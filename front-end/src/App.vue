@@ -1,23 +1,12 @@
 <script setup>
-import { ref } from 'vue';
 import Header from './components/Header.vue'; // Importation du header
-<<<<<<< HEAD
-import StoryPopup from './components/StoryPopup.vue';
-
-
-let story_message = "L'océan, vaste et mystérieux, existe depuis des millénaires. Il a traversé les âges, portant en son sein la naissance et l'évolution de formes de vie infiniment diverses. Comme les cellules d'un corps vivant, ces créatures marines se sont multipliées, chacune apportant une spécificité unique à l'ensemble de cet écosystème fascinant."
-
-let show_story_popup = ref(true);
-
-=======
->>>>>>> 62f35ff0b863d3e955af99050aabe26771248269
 </script>
 
 <template>
   <Header />
 
   <main>
-    <test />
+    <RouterView />
   </main>
 </template>
 
@@ -33,7 +22,7 @@ header {
 .logo {
   display: block;
   margin: 0 auto 2rem;
-} 
+}
 
 @media (min-width: 1024px) {
 
