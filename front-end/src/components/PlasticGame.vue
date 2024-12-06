@@ -5,7 +5,7 @@
                 <h1>Plastic Clicker</h1>
 
                 <div class="score-section">
-                    <p>Points accumulés : {{ points }}</p>
+                    <p>Points accumulés : {{ points.toFixed(2) }}</p>
                     <p>Sacs plastiques recyclés : {{ recycledBags }}</p>
                 </div>
 

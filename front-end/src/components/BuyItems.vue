@@ -1,7 +1,8 @@
 <template>
     <div class="container">
       <h1 class="title">Améliorations</h1>
-      <p class="selected-item">Article sélectionné : {{ selectedItem }}</p>
+      <!-- <p class="selected-item">Article sélectionné : {{ selectedItem }}</p>
+      <p>Points disponibles : {{ points }}</p> -->
   
       <div class="items-list">
         <div
@@ -19,19 +20,31 @@
       </div>
   
       <button 
-        @click="buyItem" 
+        @click="attemptPurchase" 
         :disabled="!selectedItem || selectedItemPrice > points" 
         class="buy-button"
       >
         Acheter l'article
       </button>
   
+      <!-- Boîte de dialogue de confirmation -->
+      <div v-if="showConfirmation" class="confirmation-dialog">
+        <div class="dialog-content">
+          <p>Confirmez-vous l'achat de : {{ selectedItem }} pour {{ selectedItemPrice }} € ?</p>
+          <div class="dialog-actions">
+            <button id="oui" @click="confirmPurchase">Oui</button>
+            <button id="non" @click="cancelPurchase">Non</button>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Message après l'achat -->
       <div v-if="purchasedItem" class="confirmation">
         <p>Félicitations ! Vous avez acheté : {{ purchasedItem }}</p>
       </div>
     </div>
   </template>
-    
+  
   <script setup>
   import { ref, defineProps, defineEmits } from 'vue';
   
@@ -56,25 +69,33 @@
   const selectedItem = ref('');
   const selectedItemPrice = ref(0);
   const purchasedItem = ref('');
+  const showConfirmation = ref(false);
   
   const selectItem = (item) => {
     selectedItem.value = item.name;
     selectedItemPrice.value = item.price;
   };
   
-  const buyItem = () => {
-    if (selectedItem.value && selectedItemPrice.value <= props.points) {
+  const attemptPurchase = () => {
+    showConfirmation.value = true;
+  };
+  
+  const confirmPurchase = () => {
+    if (selectedItemPrice.value <= props.points) {
       emit('buy-upgrade', selectedItemPrice.value);
       purchasedItem.value = selectedItem.value;
       selectedItem.value = '';
       selectedItemPrice.value = 0;
     } else {
-      alert('L\'achat a échoué.');
+      alert('Points insuffisants pour cet achat.');
     }
+    showConfirmation.value = false;
+  };
+  
+  const cancelPurchase = () => {
+    showConfirmation.value = false;
   };
   </script>
-    
-
   
   <style scoped>
   .selected-item {
@@ -105,14 +126,14 @@
   }
   
   .item.selected {
-    background-color: #4CAF50;
+    background-color: #ffffff;
     color: white;
   }
   
   .buy-button {
     margin-top: 20px;
     padding: 12px 20px;
-    background-color: #4CAF50;
+    background-color: #ff0000;
     color: white;
     border: none;
     border-radius: 10px;
@@ -126,16 +147,42 @@
     cursor: not-allowed;
   }
   
-  .buy-button:hover {
-    background-color: #45a049;
+  .confirmation-dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
-  .confirmation {
-    margin-top: 20px;
-    background-color: #e0f7e0;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 1.1rem;
-    color: #4CAF50;
+  .dialog-content {
+    background: white;
+    color: black;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .dialog-actions button {
+    margin: 0 0.5rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  #oui {
+    background: red;
+    color: white;
+  }
+  
+  #non {
+    background: green;
+    color: white;
   }
   </style>
+  
