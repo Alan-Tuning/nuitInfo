@@ -1,4 +1,5 @@
 <script setup>
+import test from './components/Clique_histoire.vue'; // Importation du test
 import Header from './components/Header.vue'; // Importation du header
 </script>
 
@@ -6,7 +7,7 @@ import Header from './components/Header.vue'; // Importation du header
   <Header />
 
   <main>
-    <RouterView />
+    <test />
   </main>
 </template>
 
@@ -18,7 +19,7 @@ header {
 .logo {
   display: block;
   margin: 0 auto 2rem;
-}
+} 
 
 @media (min-width: 1024px) {
   header {
