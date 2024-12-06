@@ -20,14 +20,21 @@ const toggleBottomSection2 = () => {
 	}, 500); // Delay to match the transition duration
 };
 
+const redirectMain = () => {
+	const cloudSelectedEvent = new CustomEvent('cloudSelected', {
+		detail: null,
+	});
+	window.dispatchEvent(cloudSelectedEvent);
+}
+
 const isWinFunc = () => {
 	if (currentIcon1.value === on
 		&& currentIcon2.value === on
 		&& currentIcon3.value === on
 		&& currentIcon4.value === on
 	) {
-		isfinish.value = true;
 		toggleBottomSection2();
+		redirectMain();
 	}
 }
 
