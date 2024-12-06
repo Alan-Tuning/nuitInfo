@@ -1,4 +1,5 @@
 <script setup>
+import FactoriesGames from './components/factoriesGames.vue';
 import Header from './components/Header.vue'; // Importation du header
 import TheWelcome from './components/TheWelcome.vue';
 </script>
@@ -9,7 +10,7 @@ import TheWelcome from './components/TheWelcome.vue';
 
 
   <main>
-    <TheWelcome />
+    <FactoriesGames />
   </main>
 </template>
 
