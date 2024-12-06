@@ -69,14 +69,31 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #080E1E; /* Fond bleu foncé pour toute la zone de jeu */
-    }
-
-    .boat-svg, .net-svg, .coral1-svg, .coral2-svg {
+    background-color: #EBEBEB;
+  }
+  
+  .boat-svg, .net-svg, .coral1-svg, .coral2-svg {
+    background-color: #EBEBEB;
     position: absolute;
-    }
-
-    .boat-svg {
+    width: 100%;
+    height: auto;
+  }
+  
+  .boat-svg, .net-svg {
+    background-color: #EBEBEB;
+  }
+  
+  .boat-svg {
+    top: 5%;
+    left: 0;
+  }
+  
+  .net-svg {
+    top: 50%;
+    left: 0;
+  }
+  
+  .coral1-svg {
     width: 30%;
     top: 0%;
     left: 50%;
@@ -123,7 +140,7 @@
         }
         
         .boat-svg, .net-svg {
-            background-color: #080E1E;
+            background-color: #EBEBEB;
         }
         
         .boat-svg {

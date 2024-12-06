@@ -10,19 +10,29 @@ import factoriesGames from '../components/factoriesGames.vue';
 
 let story_message = ref("L'océan, vaste et mystérieux, existe depuis des millénaires. Il a traversé les âges, portant en son sein la naissance et l'évolution de formes de vie infiniment diverses. Comme les cellules d'un corps vivant, ces créatures marines se sont multipliées, chacune apportant une spécificité unique à l'ensemble de cet écosystème fascinant.");
 let show_story_popup = ref(true);
+
+function show_story(message){
+  story_message.value = message;
+  show_story_popup.value = true;
+}
+
+
 const womanVisible = ref(true);
 const currentComponent = ref(null);
 
 const handleCloudSelection = (id) => {
     if (id == 3) {
     currentComponent.value = factoriesGames;
+    show_story("Tout comme la fièvre peut indiquer un dysfonctionnement dans le corps humain, la fonte des glaciers est un indicateur préoccupant du réchauffement climatique, un problème global qui menace notre planète et ses écosystèmes. L’industrialisation massive à l’origine de ce réchauffement doit être contrôlée.")
   }
   else if (id == 4) {
     currentComponent.value = game_plastique;
+    show_story("La peau, lorsqu'elle est atteinte par le cancer, subit des dommages irréversibles. De manière similaire, le continent de plastique, résultat de la pollution humaine, défigure nos océans et menace la vie marine. Soignons le cancer de l’océan, en supprimant les déchets.")
   } else if (id === 5) {
     currentComponent.value = HelloWorld;
   } else if (id === 2) {
     currentComponent.value = FishingGame;
+    show_story("Les troubles respiratoires touchent de nombreuses personnes. Les coraux sont à l'océan ce que les poumons sont à l'humain. En raison des pratiques destructrices des pêcheurs qui raclent les fonds marins, ils sont menacés de disparition.");
   } else {
     currentComponent.value = null;
   }
