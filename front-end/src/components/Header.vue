@@ -25,7 +25,6 @@ defineProps({
 
 <template>
   <header id="header" class="l-header">
-    <div class="l-header__container">
       <!-- Logo -->
       <a href="/" class="l-header__home" title="Accueil">
         <!-- Le logo est stocké dans assets/logo-site.png du dossier src -->
@@ -56,8 +55,8 @@ defineProps({
           <li><a href="#odyssey" class="l-navigation__link">Odyssée 2025 - 2027</a></li>
           <li><a href="#team" class="l-navigation__link">L'équipe</a></li>
           <li><a href="#partners" class="l-navigation__link">Les partenaires</a></li>
+          <li><RouterLink to="/cookie">Go to cookie</RouterLink></li>
         </ul>
-        <RouterLink to="/cookie">Go to cookie</RouterLink>
       </nav>
       <!-- Support Button -->
       <a :href="supportLink" class="c-waterdrop l-header__waterdrop">
@@ -66,7 +65,6 @@ defineProps({
         </svg> -->
         {{ supportText }}
       </a>
-    </div>
   </header>
 </template>
 
@@ -79,9 +77,6 @@ defineProps({
   z-index: 1000;
   width: 100%;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.l-header__container {
   display: flex;
   justify-content: space-between;
   align-items: center;
