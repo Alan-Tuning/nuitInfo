@@ -22,7 +22,7 @@ const toggleBottomSection2 = () => {
 
 const redirectMain = () => {
 	const cloudSelectedEvent = new CustomEvent('cloudSelected', {
-		detail: null,
+		detail: -3,
 	});
 	window.dispatchEvent(cloudSelectedEvent);
 }

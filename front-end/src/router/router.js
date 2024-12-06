@@ -18,6 +18,11 @@ const router = createRouter({
       name: 'captcha',
       component: () => import('../views/CaptchaView.vue'),
     },
+    {
+      path: '/podcast',
+      name: 'podcast',
+      component: () => import('../views/PodcastView.vue'),
+    }
   ],
 })
 
