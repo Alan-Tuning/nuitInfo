@@ -5,9 +5,6 @@ let props = defineProps(['message', 'show_footer'])
 
 defineEmits(['close_popup'])
 
-
-console.log(props.message)
-
 </script>
 
 <template>
@@ -24,7 +21,9 @@ console.log(props.message)
                 </p>
             </div>
     
-            <button @click="$emit('close_popup')">J'ai compris</button>
+            <button @click="$emit('close_popup')">
+               <p> C'est parti ! </p>
+            </button>
         </div>
     </div>
 </template>
@@ -39,8 +38,8 @@ console.log(props.message)
     left: 0;
     right: 0;
     width: 100%;
-    height: 20%;
-    color: #EBEBEB; /* Change the text color */
+    height: auto;
+    color: #EBEBEB;
 }
 
 .line-separator {
@@ -60,6 +59,7 @@ console.log(props.message)
     width: 50%;
     height: 100%;
     z-index: -1;
+    object-fit: cover;
 }
 
 #footer_component {
@@ -71,7 +71,6 @@ console.log(props.message)
     height: 100%;
     z-index: 0;
 }
-
 #background-image2 {
     position: absolute;
     bottom: 40;
@@ -80,7 +79,9 @@ console.log(props.message)
     width: 50%;
     height: 100%;
     z-index: -2;
+    object-fit: cover;
 }
+
 button {
     background-color: #ffffff00;
     color: white;
@@ -91,13 +92,13 @@ button {
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin: 4px 2px;
+    margin: 15px 2px;
     cursor: pointer;
+    transition: background-color 0.5s ease;
 }
 
 button:hover {
-    background-color: #EBEBEB;
-    color: #080E1E;
+    background-color: #EBEBEBFF;
 }
 
 

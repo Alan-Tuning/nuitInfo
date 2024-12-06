@@ -2,7 +2,6 @@
 import { ref } from 'vue';
 import Woman from '../components/Woman.vue';
 import HelloWorld from '../components/HelloWorld.vue';
-import TheWelcome from '../components/TheWelcome.vue';
 import FishingGame from '../components/FishingGame.vue';
 
 import StoryPopup from '../components/StoryPopup.vue';
@@ -12,6 +11,11 @@ let story_message = ref("L'océan, vaste et mystérieux, existe depuis des mill�
 
 let show_story_popup = ref(true);
 
+function show_story(message){
+  story_message.value = message;
+  show_story_popup.value = true;
+}
+
 
 const currentComponent = ref(null);
 
@@ -20,6 +24,7 @@ const handleCloudSelection = (id) => {
     currentComponent.value = HelloWorld;
   } else if (id === 2) {
     currentComponent.value = FishingGame;
+    show_story('POISSON');
   } else {
     currentComponent.value = null; 
   }
