@@ -1,15 +1,12 @@
 <script setup>
 import Header from './components/Header.vue'; // Importation du header
-import TheWelcome from './components/game_plastique.vue'; // Importation du jeu
 </script>
 
 <template>
-  <!-- Insertion du Header -->
   <Header />
 
-
   <main>
-    <TheWelcome />
+    <RouterView />
   </main>
 </template>
 
@@ -38,6 +35,18 @@ header {
     display: flex;
     place-items: flex-start;
     flex-wrap: wrap;
+  }
+
+  .dynamic-component {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000; /* Mettre au-dessus de Woman */
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 </style>
