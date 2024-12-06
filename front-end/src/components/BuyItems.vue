@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-      <h1 class="title">A</h1>
+      <h1 class="title">Améliorations</h1>
       <p class="selected-item">Article sélectionné : {{ selectedItem }}</p>
   
       <div class="items-list">
@@ -8,53 +8,73 @@
           v-for="item in items"
           :key="item.id"
           class="item"
-          @click="selectItem(item.name)"
-          :class="{ selected: item.name === selectedItem }"
+          @click="selectItem(item)"
+          :class="{ 
+            selected: item.name === selectedItem, 
+            disabled: item.price > points 
+          }"
         >
           {{ item.name }} - {{ item.price }} €
         </div>
       </div>
   
-      <button @click="buyItem" :disabled="!selectedItem" class="buy-button">Acheter l'article</button>
+      <button 
+        @click="buyItem" 
+        :disabled="!selectedItem || selectedItemPrice > points" 
+        class="buy-button"
+      >
+        Acheter l'article
+      </button>
   
       <div v-if="purchasedItem" class="confirmation">
         <p>Félicitations ! Vous avez acheté : {{ purchasedItem }}</p>
       </div>
     </div>
   </template>
-  
+    
   <script setup>
-  import { ref } from 'vue';
+  import { ref, defineProps, defineEmits } from 'vue';
+  
+  const props = defineProps({
+    points: {
+      type: Number,
+      required: true
+    }
+  });
+  
+  const emit = defineEmits(['buy-upgrade']);
   
   const items = ref([
-    { id: 1, name: 'Champignon qui mange plastique', price: 129.99 },
-    { id: 2, name: 'Jacques-Yves Cousteau', price: 999.50 },
-    { id: 3, name: 'DeLorean qui consomme les déchets', price: 1499.00 },
-    { id: 4, name: 'Hugues Aufray qui chante', price: 249.99 },
-    { id: 5, name: 'Un bateau de nettoyage', price: 2999.99 },
-    { id: 6, name: 'Renaud c\'est la mer qui prend l\'homme TATATA', price: 79.99 },
+    { id: 1, name: 'Champignon qui mange plastique', price: 1.99, bonus: 1 },
+    { id: 2, name: 'Jacques-Yves Cousteau', price: 999.50, bonus: 5 },
+    { id: 3, name: 'DeLorean qui consomme les déchets', price: 1499.00, bonus: 10 },
+    { id: 4, name: 'Hugues Aufray qui chante', price: 249.99, bonus: 2 },
+    { id: 5, name: 'Un bateau de nettoyage', price: 2999.99, bonus: 20 },
+    { id: 6, name: 'Renaud c\'est la mer qui prend l\'homme TATATA', price: 79.99, bonus: 1 },
   ]);
   
   const selectedItem = ref('');
+  const selectedItemPrice = ref(0);
   const purchasedItem = ref('');
   
+  const selectItem = (item) => {
+    selectedItem.value = item.name;
+    selectedItemPrice.value = item.price;
+  };
+  
   const buyItem = () => {
-    if (verifyPurchase()) {
+    if (selectedItem.value && selectedItemPrice.value <= props.points) {
+      emit('buy-upgrade', selectedItemPrice.value);
       purchasedItem.value = selectedItem.value;
       selectedItem.value = '';
+      selectedItemPrice.value = 0;
     } else {
       alert('L\'achat a échoué.');
     }
   };
-  
-  const verifyPurchase = () => {
-    return true;
-  };
-  
-  const selectItem = (itemName) => {
-    selectedItem.value = itemName;
-  };
   </script>
+    
+
   
   <style scoped>
   .selected-item {
