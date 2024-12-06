@@ -1,8 +1,6 @@
 <template>
   <div class="game-container">
     <!-- En-tête du jeu -->
-
-    <!-- Encadré avec le principe du jeu -->
     <section class="game-instruction">
       <p>Le but du jeu est de ramasser les sacs plastiques qui tombent du ciel et de les déposer dans la poubelle. Déplacez-les dans la poubelle. Chaque sac plastique collecté vous rapporte un point et chaque poisson vous en fait perdre un.</p>
     </section>
@@ -16,10 +14,11 @@
         class="point"
         :style="{ left: point.left, top: point.top }"
         @dragstart="dragStart($event, point)"
+        @dragend="dragEnd($event)"
+        draggable="true"
         @touchstart="touchStart($event, point)"
         @touchmove="touchMove($event, point)"
-        @touchend="touchEnd($event, point)"
-        draggable="true"
+        @touchend="touchEnd($event)"
       >
         <img :src="point.image" alt="Point" class="point-image" />
       </div>
@@ -28,9 +27,6 @@
       <div
         class="basket"
         :style="{ left: basketPosition.left, bottom: basketPosition.bottom }"
-        @drop="drop($event)"
-        @dragover="allowDrop($event)"
-        @touchmove="allowDrop($event)"
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40">
           <path d="M3 4h18v2H3zm2 3h14l1 11H4zm3 4h8v6H7z" />
@@ -65,20 +61,21 @@ let dernierPoint = null;
 const gameOver = ref(false); // Pour afficher le message de fin de jeu
 const congratulationsMessage = ref(''); // Message de félicitations
 
+// Fonction pour générer un point (sac plastique ou poisson)
 const generatePoint = (isFish) => {
   const image = isFish ? logoSite : sacPlastique; // Choisir l'image selon le paramètre isFish
 
   // Limiter la position horizontale pour qu'elle reste dans la zone de jeu
-  const left = Math.random() * (gameAreaWidth.value - 50) + 'px'; // Position horizontale aléatoire (en tenant compte de la largeur du point)
+  const left = Math.random() * (gameAreaWidth.value - 50) + 'px'; // Position horizontale aléatoire
 
   // Limiter la position verticale pour qu'elle reste dans la zone de jeu
-  const top = Math.random() * (gameAreaHeight.value - 100) + 'px'; // Position verticale aléatoire (en tenant compte de la hauteur du point)
+  const top = Math.random() * (gameAreaHeight.value - 100) + 'px'; // Position verticale aléatoire
 
   const id = Date.now() + Math.random(); // ID unique pour chaque point
   points.value.push({ id, image, left, top, isFish });
 };
 
-// Créer des points au démarrage
+// Créer les points au démarrage
 const createPoints = () => {
   points.value = []; // Réinitialiser la liste des points
   // Générer toujours 6 poissons et 3 sacs plastiques
@@ -90,75 +87,104 @@ const createPoints = () => {
   }
 };
 
-// Fonction de drag start pour chaque point
+// Fonction pour gérer le démarrage du drag (ordinateur)
 const dragStart = (event, point) => {
-  event.dataTransfer.setData('point', JSON.stringify(point));
-  dernierPoint = point;
+  event.dataTransfer.setData('point', JSON.stringify(point)); // Enregistrer le point dans les données de transfert
+  dernierPoint = point; // Sauvegarder le dernier point touché
 };
 
-// Fonction de touch start pour chaque point
-const touchStart = (event, point) => {
-  const touch = event.touches[0];
-  point.offsetX = touch.clientX - point.left.replace('px', '');
-  point.offsetY = touch.clientY - point.top.replace('px', '');
-  dernierPoint = point;
-};
+// Fonction pour gérer le drag end (ordinateur)
+const dragEnd = (event) => {
+  event.preventDefault(); // Empêcher l'action par défaut du drag
 
-// Fonction de touch move pour chaque point
-const touchMove = (event, point) => {
-  const touch = event.touches[0];
-  point.left = touch.clientX - point.offsetX + 'px';
-  point.top = touch.clientY - point.offsetY + 'px';
-};
+  // Récupérer la position de la poubelle
+  const basketRect = document.querySelector('.basket').getBoundingClientRect();
 
-// Fonction de touch end pour chaque point
-const touchEnd = (event, point) => {
-  const basket = document.querySelector('.basket');
-  const basketRect = basket.getBoundingClientRect();
-  const pointRect = event.target.getBoundingClientRect();
+  // Récupérer la position de la souris lors du dragend
+  const mouseX = event.clientX; // Position horizontale de la souris
+  const mouseY = event.clientY; // Position verticale de la souris
 
+  // Récupérer la position du point
+  const pointRect = {
+    left: mouseX - 10, // Position horizontale ajustée pour le centre de l'image
+    top: mouseY - 10, // Position verticale ajustée pour le centre de l'image
+    right: mouseX + 10, // Ajuster la droite du point
+    bottom: mouseY + 10, // Ajuster le bas du point
+  };
+
+  console.log("Position de la souris:", mouseX, mouseY);
+  console.log("Position du point:", pointRect.left, pointRect.top, pointRect.right, pointRect.bottom);
+  console.log("Position de la poubelle:", basketRect.left, basketRect.top, basketRect.right, basketRect.bottom);
+
+  // Vérifier si le point est dans la poubelle (positionné dessus)
   if (
-    pointRect.left > basketRect.left &&
-    pointRect.right < basketRect.right &&
-    pointRect.top > basketRect.top &&
-    pointRect.bottom < basketRect.bottom
+    pointRect.left >= basketRect.left &&
+    pointRect.right <= basketRect.right &&
+    pointRect.top >= basketRect.top &&
+    pointRect.bottom <= basketRect.bottom
   ) {
-    drop(event, point);
+    // Si c'est un sac plastique, gagner un point; sinon, perdre un point (si c'est un poisson)
+    score.value += dernierPoint.isFish ? -1 : 1; 
+
+    // Supprimer le point collecté
+    points.value = points.value.filter(p => p.id !== dernierPoint.id);
+
+    // Ajouter un nouveau point
+    generatePoint(dernierPoint.isFish);
   }
 };
 
-// Fonction de drag over pour autoriser le drop
-const allowDrop = (event) => {
-  event.preventDefault(); // Permet le comportement de "drop"
+// Fonction pour gérer le démarrage du touché (mobile)
+const touchStart = (event, point) => {
+  event.preventDefault(); // Empêcher le comportement par défaut
+  dernierPoint = point; // Enregistrer le point touché
 };
 
-// Fonction de drop pour récupérer un point, mettre à jour le score et supprimer le point
-const drop = (event, point) => {
-  event.preventDefault();
+// Fonction pour gérer le mouvement du touché (mobile)
+const touchMove = (event, point) => {
+  event.preventDefault(); // Empêcher le comportement par défaut
+  const touch = event.touches[0]; // Obtenir la position du touché
+  point.left = touch.clientX +'px'; // Mise à jour de la position horizontale
+  point.top = touch.clientY + 'px'; // Mise à jour de la position verticale
+};
 
-  // Mise à jour du score
-  if (!point.isFish) {
-    score.value += 1; // Gain de points pour le sac plastique
-  } else {
-    score.value -= 1; // Perte de points pour le poisson
-  }
+const touchEnd = (event) => {
+  event.preventDefault(); // Empêcher le comportement par défaut
 
-  // Supprimer le point de la liste des points
-  points.value = points.value.filter(p => p.id !== point.id);
+  // Récupérer la position de la poubelle
+  const basketRect = document.querySelector('.basket').getBoundingClientRect();
 
-  // Générer un nouveau point pour remplacer celui collecté
-  if (dernierPoint.isFish) {
-    generatePoint(true); // Générer un nouveau poisson
-  } else {
-    generatePoint(false); // Générer un nouveau sac plastique
-  }
+  // Récupérer la position du doigt lors du touchend
+  const touch = event.changedTouches[0]; // Nous récupérons le premier doigt (s'il y en a plusieurs)
 
-  // Vérifier si le score atteint 5
-  if (score.value === 5) {
-    gameOver.value = true; // Afficher le message de fin de jeu
-    congratulationsMessage.value = 'Félicitations, vous avez gagné!';
+  const pointRect = {
+    left: parseFloat(dernierPoint.left),
+    top: parseFloat(dernierPoint.top),
+    right: parseFloat(dernierPoint.left) + 50, // Ajuster la largeur du point
+    bottom: parseFloat(dernierPoint.top) + 50, // Ajuster la hauteur du point
+  };
+
+  // Coordonnée du doigt
+  const touchX = touch.clientX; // Position horizontale du doigt
+  const touchY = touch.clientY; // Position verticale du doigt
+
+  console.log("Position du doigt: ", touchX, touchY);
+  console.log("Position du point: ", pointRect.left, pointRect.top, pointRect.right, pointRect.bottom);
+  console.log("Position de la poubelle: ", basketRect.left, basketRect.top, basketRect.right, basketRect.bottom);
+
+  // Vérifier si le point est dans la poubelle (positionné dessus)
+  if (
+    touchX >= basketRect.left &&
+    touchX <= basketRect.right &&
+    touchY >= basketRect.top &&
+    touchY <= basketRect.bottom
+  ) {
+    score.value += dernierPoint.isFish ? -1 : 1; // Perdre un point si c'est un poisson, gagner un point sinon
+    points.value = points.value.filter(p => p.id !== dernierPoint.id); // Supprimer le point collecté
+    generatePoint(dernierPoint.isFish); // Ajouter un nouveau point (poisson ou sac plastique)
   }
 };
+
 
 // Fonction pour redémarrer le jeu (revenir à l'accueil)
 const restartGame = () => {
@@ -169,15 +195,14 @@ const restartGame = () => {
 };
 
 onMounted(() => {
-  // Définir les dimensions de la zone de jeu
-  gameAreaHeight.value = window.innerHeight - 160; // Laisser de la place pour le header et les instructions
-  gameAreaWidth.value = window.innerWidth;
+  gameAreaHeight.value = window.innerHeight - 160; // Hauteur de la zone de jeu
+  gameAreaWidth.value = window.innerWidth; // Largeur de la zone de jeu
 
-  createPoints(); // Générer les points au démarrage du jeu
+  createPoints(); // Créer les points au démarrage
 });
 
 onUnmounted(() => {
-  // Retirer l'écouteur d'événements si nécessaire
+  // Retirer les écouteurs d'événements si nécessaire
 });
 </script>
 
@@ -189,15 +214,7 @@ onUnmounted(() => {
   height: 100vh;
   width: 100%;
   padding-bottom: 40px;
-  background-color: #2196F3; /* Fond bleu pour toute la zone de jeu */
-}
-
-.game-header {
-  background-color: #4caf50;
-  width: 100%;
-  padding: 10px;
-  text-align: center;
-  color: white;
+  background-color: #2196F3; /* Fond bleu */
 }
 
 .game-instruction {
@@ -206,7 +223,7 @@ onUnmounted(() => {
   border: 2px solid #4caf50;
   width: 90%;
   text-align: center;
-  font-size: 1rem; /* Taille de texte par défaut */
+  font-size: 1rem; /* Taille de texte */
 }
 
 .game-play {
@@ -218,8 +235,8 @@ onUnmounted(() => {
 
 .point {
   position: absolute;
-  width: 50px; /* Ajustez la taille de l'image */
-  height: 50px; /* Ajustez la taille de l'image */
+  width: 50px;
+  height: 50px;
   cursor: pointer;
 }
 
@@ -274,7 +291,7 @@ onUnmounted(() => {
   }
 
   .game-instruction {
-    font-size: 0.8rem; /* Taille de texte plus petite pour les écrans mobiles */
+    font-size: 0.8rem;
   }
 }
 
@@ -288,7 +305,6 @@ button {
   background-color: #4caf50;
   color: white;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
 }
 
