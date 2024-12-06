@@ -1,7 +1,7 @@
 <template>
     <div class="parent">
         <div class="plastic-bag" :class="{ 'clicked': isClicked }" @click="clickBag">
-            <img src="@/assets/plastic-bag.png" alt="Sac plastique à recycler" draggable="true" :style="{ width: width_bag + '%', 
+            <img src="@/assets/sacplastique.png" alt="Sac plastique à recycler" draggable="true" :style="{ width: width_bag + '%', 
             marginLeft: left_bag + '%', marginTop:top_bag + '%', filter: colorVar}">
         </div>
             <div class="plastic-clicker">
