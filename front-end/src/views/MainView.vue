@@ -23,7 +23,7 @@ const currentComponent = ref(null);
 const handleCloudSelection = (id) => {
     if (id == 3) {
     currentComponent.value = factoriesGames;
-    show_story("Tout comme la fièvre peut indiquer un dysfonctionnement dans le corps humain, la fonte des glaciers est un indicateur préoccupant du réchauffement climatique, un problème global qui menace notre planète et ses écosystèmes. L’industrialisation massive à l’origine de ce réchauffement doit être contrôlée.")
+    show_story("Tout comme la fièvre peut indiquer un dysfonctionnement dans le corps humain, la fonte des glaciers est un indicateur préoccupant du réchauffement climatique, un problème global qui menace notre planète et ses écosystèmes. L’industrialisation massive à l’origine de ce réchauffement doit être contrôlée. Éteint les centrales pour éviter la fonte des glaces.")
   }
   else if (id == 4) {
     currentComponent.value = game_plastique;
