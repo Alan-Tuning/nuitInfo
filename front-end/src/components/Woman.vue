@@ -39,12 +39,12 @@ onMounted(() => {
 
 function adjustCloudPositions() {
   if (windowWidth.value <= 780) {
-    clouds[0].x = 35;  clouds[0].y = 45; //rein
-    clouds[1].x = 42;  clouds[1].y = 39; //poumon droit
-    clouds[2].x = 35;  clouds[2].y = 39; // poumon gauche
-    clouds[3].x = 38;  clouds[3].y = 23; // front
-    clouds[4].x = 15;  clouds[4].y = 50; //bras
-    clouds[5].x = 40;  clouds[5].y = 35; //coeur
+    clouds[0].x = 35;  clouds[0].y = 42; //rein
+    clouds[1].x = 40;  clouds[1].y = 36; //poumon droit
+    clouds[2].x = 32;  clouds[2].y = 36; // poumon gauche
+    clouds[3].x = 38;  clouds[3].y = 20; // front
+    clouds[4].x = 15;  clouds[4].y = 45; //bras
+    clouds[5].x = 40;  clouds[5].y = 32; //coeur
   } else {
     clouds[0].x = 47; clouds[0].y = 38;
     clouds[1].x = 48; clouds[1].y = 30;
@@ -99,7 +99,7 @@ h1 {
 }
 
 .image-woman {
-  transform: translate(-50%);
+  transform: translate(50%);
 }
 
 img {

@@ -1,6 +1,6 @@
 <script setup>
 import Header from './components/Header.vue'; // Importation du header
-import TheWelcome from './components/TheWelcome.vue';
+import Woman from './components/Woman.vue';
 </script>
 
 <template>
@@ -9,7 +9,7 @@ import TheWelcome from './components/TheWelcome.vue';
 
 
   <main>
-    <TheWelcome />
+    <Woman />
   </main>
 </template>
 
