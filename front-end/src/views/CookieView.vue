@@ -1,3 +1,5 @@
+
+
 <template>
     <div>
         <h1>CookieView</h1>
@@ -7,6 +9,7 @@
 </template>
 
 <script setup>
+    import Areyousure from '../components/Areyousure.vue';
     import { ref } from 'vue';
 
     import BuyItems from '../components/BuyItems.vue';
