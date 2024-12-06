@@ -1,6 +1,6 @@
 <template>
   <div id="game-view" ref="gameContainer">
-    <p>{{ collectedObstacle }}</p>
+    <div id="count-collected">{{ collectedObstacle }}/7</div>
     <div class="wave wave1"></div>
     <div class="wave wave2"></div>
     <div class="wave wave3"></div>
@@ -231,6 +231,11 @@ export default {
   100% {
     transform: translateX(-50%) translateY(0);
   }
+}
+
+#count-collected {
+  color: #ffffff;
+  font-size: 24px;
 }
 
 #game-container {
