@@ -23,6 +23,11 @@ const clouds = reactive([
 function toggleCloud(id) {
   const cloud = clouds.find((c) => c.id === id);
   if (cloud) cloud.visible = !cloud.visible;
+
+  const cloudSelectedEvent = new CustomEvent('cloudSelected', {
+    detail: id,
+  });
+  window.dispatchEvent(cloudSelectedEvent);
 }
 
 const windowWidth = ref(window.innerWidth);

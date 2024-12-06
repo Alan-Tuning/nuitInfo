@@ -1,15 +1,36 @@
 <script setup>
-import Header from './components/Header.vue'; // Importation du header
+import { ref } from 'vue';
+import Header from './components/Header.vue';
 import Woman from './components/Woman.vue';
+import HelloWorld from './components/HelloWorld.vue';
+import TheWelcome from './components/TheWelcome.vue';
+
+const currentComponent = ref(null);
+
+const handleCloudSelection = (id) => {
+  if (id === 5) {
+    currentComponent.value = HelloWorld;
+  } else if (id === 2) {
+    currentComponent.value = TheWelcome;
+  } else {
+    currentComponent.value = null; 
+  }
+};
+
+window.addEventListener('cloudSelected', (event) => {
+  handleCloudSelection(event.detail);
+});
 </script>
 
 <template>
-  <!-- Insertion du Header -->
   <Header />
 
-
   <main>
-    <Woman />
+    <Woman v-if="!currentComponent" />
+
+    <div v-if="currentComponent" class="dynamic-component">
+      <component :is="currentComponent" />
+    </div>
   </main>
 </template>
 
@@ -38,6 +59,18 @@ header {
     display: flex;
     place-items: flex-start;
     flex-wrap: wrap;
+  }
+
+  .dynamic-component {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000; /* Mettre au-dessus de Woman */
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 </style>
