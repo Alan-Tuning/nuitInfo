@@ -106,7 +106,7 @@ const toggleIcon4 = () => {
 					<p> Tout comme la fièvre peut indiquer un dysfonctionnement dans le corps humain, la fonte des glaciers est un
 						indicateur préoccupant du réchauffement climatique, un problème global qui menace notre planète et ses
 						écosystèmes. L’industrialisation massive à l’origine de ce réchauffement doit être contrôlée.</p>
-				</button>
+				</button> 	
 			</div>
 		</transition>
 		<transition name="fade">
