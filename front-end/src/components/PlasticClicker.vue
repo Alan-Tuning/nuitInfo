@@ -1,7 +1,8 @@
 <template>
     <div class="parent">
         <div class="plastic-bag" :class="{ 'clicked': isClicked }" @click="clickBag">
-            <img src="@/assets/plastic-bag.png" alt="Sac plastique à recycler" draggable="true" :style="{ width: width_bag + '%', marginLeft: left_bag + '%', marginTop:top_bag + '%'}">
+            <img src="@/assets/plastic-bag.png" alt="Sac plastique à recycler" draggable="true" :style="{ width: width_bag + '%', 
+            marginLeft: left_bag + '%', marginTop:top_bag + '%', filter: colorVar}">
         </div>
             <div class="plastic-clicker">
                 <h1>Plastic Clicker</h1>
@@ -22,12 +23,19 @@ import { ref, computed, onMounted, onUnmounted } from 'vue';
 import BuyItems from './BuyItems.vue';
 
 // Points de base
+const Var = ref(0);
+const colorVar = ref('');
 const points = ref(0);
 const recycledBags = ref(0);
 const width_bag = ref(100.0);
 const left_bag = ref(100.0);
 const top_bag = ref(100.0);
 
+function updateColorVar() {
+  Var.value = (Var.value + 1) % 361;
+  colorVar.value = `hue-rotate(${Var.value}deg)`;
+}
+setInterval(updateColorVar, 16);
 // État du clic
 const isClicked = ref(false);
 
