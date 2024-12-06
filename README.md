@@ -1,6 +1,7 @@
-# template_fastapi
+# BACK-END
+## template_fastapi
 
-# install dependancy
+## install dependancy
 
 You need to use docker compose with:
 ```sh
@@ -10,7 +11,7 @@ in the root of the template.
 
 
 
-# usefull docs
+## usefull docs
 
 - [fastapi](https://fastapi.tiangolo.com/)
 - [sqlmodel](https://sqlmodel.tiangolo.com/)

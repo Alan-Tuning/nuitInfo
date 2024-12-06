@@ -104,11 +104,11 @@ h1 {
 }
 
 .image-woman {
-  transform: translate(50%);
+  /* transform: translate(50%); */
 }
 
 img {
-  width: 100%;
+  /* width: 100%; */
   height: 100%;
   object-fit: cover;
 }
