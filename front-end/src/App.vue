@@ -1,6 +1,13 @@
 <script setup>
-import test from './components/Clique_histoire.vue'; // Importation du test
+import { ref } from 'vue';
 import Header from './components/Header.vue'; // Importation du header
+import StoryPopup from './components/StoryPopup.vue';
+
+
+let story_message = "L'océan, vaste et mystérieux, existe depuis des millénaires. Il a traversé les âges, portant en son sein la naissance et l'évolution de formes de vie infiniment diverses. Comme les cellules d'un corps vivant, ces créatures marines se sont multipliées, chacune apportant une spécificité unique à l'ensemble de cet écosystème fascinant."
+
+let show_story_popup = ref(true);
+
 </script>
 
 <template>
@@ -9,6 +16,8 @@ import Header from './components/Header.vue'; // Importation du header
   <main>
     <test />
   </main>
+
+  <StoryPopup :message="story_message" :show_footer="show_story_popup" @close_popup="show_story_popup = false"/>
 </template>
 
 <style scoped>

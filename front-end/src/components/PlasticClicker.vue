@@ -5,7 +5,7 @@
                 <h1>Plastic Clicker</h1>
 
                 <div class="score-section">
-                    <p>Points accumulés : {{ points }}</p>
+                    <p>Points accumulés : {{ points.toFixed(2) }}</p>
                     <p>Sacs plastiques recyclés : {{ recycledBags }}</p>
                 </div>
 
@@ -17,7 +17,6 @@
 
             </div>
         </div>
-        <div class="div2"></div>
         <div class="div3">
             <BuyItems :points="points" @buy-upgrade="buyUpgrade" />
         </div>
@@ -79,7 +78,7 @@ onUnmounted(() => {
 <style scoped>
 .plastic-clicker {
     text-align: center;
-    max-width: 400px;
+    max-width: 800px;
     margin: 0 auto;
     padding: 20px;
     background-color: #f0f0f0;
