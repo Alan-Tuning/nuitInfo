@@ -2,26 +2,31 @@
 import { ref } from 'vue';
 import Woman from '../components/Woman.vue';
 import HelloWorld from '../components/HelloWorld.vue';
-import TheWelcome from '../components/TheWelcome.vue';
-
+import FishingGame from '../components/FishingGame.vue';
+import game_plastique from '@/components/game_plastique.vue';
 import StoryPopup from '../components/StoryPopup.vue';
+import factoriesGames from '../components/factoriesGames.vue';
 
 
-let story_message = ref("L'océan, vaste et mystérieux, existe depuis des millénaires. Il a traversé les âges, portant en son sein la naissance et l'évolution de formes de vie infiniment diverses. Comme les cellules d'un corps vivant, ces créatures marines se sont multipliées, chacune apportant une spécificité unique à l'ensemble de cet écosystème fascinant.")
-
+let story_message = ref("L'océan, vaste et mystérieux, existe depuis des millénaires. Il a traversé les âges, portant en son sein la naissance et l'évolution de formes de vie infiniment diverses. Comme les cellules d'un corps vivant, ces créatures marines se sont multipliées, chacune apportant une spécificité unique à l'ensemble de cet écosystème fascinant.");
 let show_story_popup = ref(true);
-
-
+const womanVisible = ref(true);
 const currentComponent = ref(null);
 
 const handleCloudSelection = (id) => {
-  if (id === 5) {
+    if (id == 3) {
+    currentComponent.value = factoriesGames;
+  }
+  else if (id == 4) {
+    currentComponent.value = game_plastique;
+  } else if (id === 5) {
     currentComponent.value = HelloWorld;
   } else if (id === 2) {
-    currentComponent.value = TheWelcome;
+    currentComponent.value = FishingGame;
   } else {
-    currentComponent.value = null; 
+    currentComponent.value = null;
   }
+  womanVisible.value = !currentComponent.value;
 };
 
 window.addEventListener('cloudSelected', (event) => {
@@ -30,16 +35,15 @@ window.addEventListener('cloudSelected', (event) => {
 </script>
 
 <template>
-    <div>
-        <Woman v-if="!currentComponent" />
+  <div>
+    <Woman :class="{ hidden: !womanVisible }" />
 
-        <div v-if="currentComponent" class="dynamic-component">
-        <component :is="currentComponent" />
-        </div>
+    <div v-if="currentComponent" class="dynamic-component">
+      <component :is="currentComponent" />
     </div>
+  </div>
 
-    <StoryPopup :message="story_message" :show_footer="show_story_popup" @close_popup="show_story_popup = false"/>
-
+  <StoryPopup :message="story_message" :show_footer="show_story_popup" @close_popup="show_story_popup = false"/>
 </template>
 
 <style scoped>
@@ -50,6 +54,10 @@ header {
 .logo {
   display: block;
   margin: 0 auto 2rem;
+}
+
+.hidden {
+  display: none;
 }
 
 @media (min-width: 1024px) {

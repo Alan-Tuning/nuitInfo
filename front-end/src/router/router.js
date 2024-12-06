@@ -16,7 +16,7 @@ const router = createRouter({
     {
       path: '/captcha',
       name: 'captcha',
-      component: () => import('../views/GameCanvas.vue'),
+      component: () => import('../views/CaptchaView.vue'),
     },
   ],
 })

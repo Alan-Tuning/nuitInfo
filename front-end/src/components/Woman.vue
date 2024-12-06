@@ -21,8 +21,14 @@ const clouds = reactive([
 ]);
 
 function toggleCloud(id) {
-  const cloud = clouds.find((c) => c.id === id);
-  if (cloud) cloud.visible = !cloud.visible;
+  if (id === 2 || id === 6) {
+    const lungClouds = clouds.filter((c) => c.id === 2 || c.id === 6);
+    lungClouds.forEach((c) => (c.visible = !c.visible));
+    id = 2; // Envoie l'ID 2 pour les deux poumons
+  } else {
+    const cloud = clouds.find((c) => c.id === id);
+    if (cloud) cloud.visible = !cloud.visible;
+  }
 
   const cloudSelectedEvent = new CustomEvent('cloudSelected', {
     detail: id,
@@ -78,8 +84,8 @@ function adjustCloudPositions() {
       }"
     >
       <img :src="cloudSrc" alt="Cloud" />
-      <div 
-        class="cloud-button" 
+      <div
+        class="cloud-button"
         @click.stop="toggleCloud(cloud.id)"
       >
       </div>
@@ -129,14 +135,13 @@ img {
   left: 50%;
   width: 20px;
   height: 20px;
-  background-color: #62B3E4;  
-  border-radius: 50%;  
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);  
-  transform: translate(-50%, -50%);  
+  background-color: #62B3E4;
+  border-radius: 50%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  transform: translate(-50%, -50%);
   cursor: pointer;
   border: 2px solid #333333;
 }
-
 
 @media (max-width: 780px) {
   .image-woman {
