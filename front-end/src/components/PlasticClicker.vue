@@ -90,7 +90,6 @@ onUnmounted(() => {
     flex-direction: column;
     text-align: center;
     padding: 20px;
-    background-color: #f0f0f0;
     border-radius: 10px;
 }
 
@@ -115,7 +114,6 @@ onUnmounted(() => {
     flex-direction: column;
     margin: 20px 0;
     padding: 10px;
-    background-color: white;
     border-radius: 5px;
 }
 
