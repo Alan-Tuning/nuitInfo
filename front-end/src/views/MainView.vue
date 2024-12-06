@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import Woman from '../components/Woman.vue';
 import HelloWorld from '../components/HelloWorld.vue';
 import TheWelcome from '../components/TheWelcome.vue';
+import FishingGame from '../components/FishingGame.vue';
 
 const currentComponent = ref(null);
 
@@ -10,10 +11,11 @@ const handleCloudSelection = (id) => {
   if (id === 5) {
     currentComponent.value = HelloWorld;
   } else if (id === 2) {
-    currentComponent.value = TheWelcome;
+    currentComponent.value = FishingGame;
   } else {
     currentComponent.value = null; 
   }
+  womanVisible.value = !currentComponent.value;
 };
 
 window.addEventListener('cloudSelected', (event) => {
@@ -23,7 +25,7 @@ window.addEventListener('cloudSelected', (event) => {
 
 <template>
     <div>
-        <Woman v-if="!currentComponent" />
+        <Woman :class="{ hidden: !womanVisible }" />
 
         <div v-if="currentComponent" class="dynamic-component">
         <component :is="currentComponent" />
