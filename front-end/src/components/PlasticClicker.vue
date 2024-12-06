@@ -1,6 +1,5 @@
 <template>
     <div class="parent">
-        <div class="div1">
             <div class="plastic-clicker">
                 <h1>Plastic Clicker</h1>
 
@@ -9,14 +8,11 @@
                     <p>Sacs plastiques recyclés : {{ recycledBags }}</p>
                 </div>
 
-                <div class="game-area">
-                    <div class="plastic-bag" :class="{ 'clicked': isClicked }" @click="clickBag">
-                        <img src="@/assets/plastic-bag.png" alt="Sac plastique à recycler" draggable="false">
-                    </div>
+                <div class="plastic-bag" :class="{ 'clicked': isClicked }" @click="clickBag">
+                    <img src="@/assets/plastic-bag.png" alt="Sac plastique à recycler" draggable="true" :style="{ width: width_bag + 'px' }">
                 </div>
 
             </div>
-        </div>
         <div class="div3">
             <BuyItems :points="points" @buy-upgrade="buyUpgrade" />
         </div>
@@ -31,6 +27,7 @@ import BuyItems from './BuyItems.vue';
 // Points de base
 const points = ref(0);
 const recycledBags = ref(0);
+const width_bag = ref(100.0);
 
 // État du clic
 const isClicked = ref(false);
@@ -46,11 +43,14 @@ const clickBag = () => {
     points.value++;
     recycledBags.value++;
     isClicked.value = true;
-
     // Animation de clic
     setTimeout(() => {
         isClicked.value = false;
     }, 100);
+
+    clickBag.value = Math.random()*1000
+    console.log(clickBag.value)
+
 };
 
 // Acheter une amélioration
@@ -76,10 +76,19 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+.parent {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; /* Ajoute de l'espace entre les éléments */
+    align-items: center; /* Centre les éléments verticalement */
+    padding: 20px;
+}
+
 .plastic-clicker {
+    flex: 0 0 75%; /* Largeur fixe de 80% */
+    display: flex;
+    flex-direction: column;
     text-align: center;
-    max-width: 800px;
-    margin: 0 auto;
     padding: 20px;
     background-color: #f0f0f0;
     border-radius: 10px;
@@ -101,6 +110,9 @@ onUnmounted(() => {
 }
 
 .score-section {
+    flex: 0 0 20%; /* Largeur fixe de 20% */
+    display: flex;
+    flex-direction: column;
     margin: 20px 0;
     padding: 10px;
     background-color: white;
@@ -108,7 +120,7 @@ onUnmounted(() => {
 }
 
 
-.parent {
+/* .parent {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 1fr;
@@ -126,5 +138,5 @@ onUnmounted(() => {
 
 .div3 {
     grid-area: 1 / 3 / 2 / 4;
-}
+} */
 </style>

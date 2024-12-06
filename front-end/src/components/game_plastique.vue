@@ -1,9 +1,6 @@
 <template>
   <div class="game-container">
     <!-- En-tête du jeu -->
-    <header class="game-header">
-      <h1>Jeu du recyclage</h1>
-    </header>
 
     <!-- Encadré avec le principe du jeu -->
     <section class="game-instruction">
@@ -19,6 +16,9 @@
         class="point"
         :style="{ left: point.left, top: point.top }"
         @dragstart="dragStart($event, point)"
+        @touchstart="touchStart($event, point)"
+        @touchmove="touchMove($event, point)"
+        @touchend="touchEnd($event, point)"
         draggable="true"
       >
         <img :src="point.image" alt="Point" class="point-image" />
@@ -30,6 +30,7 @@
         :style="{ left: basketPosition.left, bottom: basketPosition.bottom }"
         @drop="drop($event)"
         @dragover="allowDrop($event)"
+        @touchmove="allowDrop($event)"
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40">
           <path d="M3 4h18v2H3zm2 3h14l1 11H4zm3 4h8v6H7z" />
@@ -49,7 +50,6 @@
     </div>
   </div>
 </template>
-
 
 <script setup>
 import logoSite from '@/assets/poisson.png'; // Importation de l'image du poisson
@@ -78,7 +78,6 @@ const generatePoint = (isFish) => {
   points.value.push({ id, image, left, top, isFish });
 };
 
-
 // Créer des points au démarrage
 const createPoints = () => {
   points.value = []; // Réinitialiser la liste des points
@@ -97,16 +96,45 @@ const dragStart = (event, point) => {
   dernierPoint = point;
 };
 
+// Fonction de touch start pour chaque point
+const touchStart = (event, point) => {
+  const touch = event.touches[0];
+  point.offsetX = touch.clientX - point.left.replace('px', '');
+  point.offsetY = touch.clientY - point.top.replace('px', '');
+  dernierPoint = point;
+};
+
+// Fonction de touch move pour chaque point
+const touchMove = (event, point) => {
+  const touch = event.touches[0];
+  point.left = touch.clientX - point.offsetX + 'px';
+  point.top = touch.clientY - point.offsetY + 'px';
+};
+
+// Fonction de touch end pour chaque point
+const touchEnd = (event, point) => {
+  const basket = document.querySelector('.basket');
+  const basketRect = basket.getBoundingClientRect();
+  const pointRect = event.target.getBoundingClientRect();
+
+  if (
+    pointRect.left > basketRect.left &&
+    pointRect.right < basketRect.right &&
+    pointRect.top > basketRect.top &&
+    pointRect.bottom < basketRect.bottom
+  ) {
+    drop(event, point);
+  }
+};
+
 // Fonction de drag over pour autoriser le drop
 const allowDrop = (event) => {
   event.preventDefault(); // Permet le comportement de "drop"
 };
 
 // Fonction de drop pour récupérer un point, mettre à jour le score et supprimer le point
-const drop = (event) => {
+const drop = (event, point) => {
   event.preventDefault();
-  const data = event.dataTransfer.getData('point');
-  const point = JSON.parse(data);
 
   // Mise à jour du score
   if (!point.isFish) {
@@ -125,7 +153,6 @@ const drop = (event) => {
     generatePoint(false); // Générer un nouveau sac plastique
   }
 
-
   // Vérifier si le score atteint 5
   if (score.value === 5) {
     gameOver.value = true; // Afficher le message de fin de jeu
@@ -135,11 +162,10 @@ const drop = (event) => {
 
 // Fonction pour redémarrer le jeu (revenir à l'accueil)
 const restartGame = () => {
-  // Remettre tout à zéro
-  score.value = 0;
-  gameOver.value = false;
-  congratulationsMessage.value = '';
-  createPoints();
+  const cloudSelectedEvent = new CustomEvent('cloudSelected', {
+    detail: null,
+  });
+  window.dispatchEvent(cloudSelectedEvent);
 };
 
 onMounted(() => {
@@ -155,13 +181,13 @@ onUnmounted(() => {
 });
 </script>
 
-
 <style scoped>
 .game-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100vh;
+  width: 100%;
   padding-bottom: 40px;
   background-color: #2196F3; /* Fond bleu pour toute la zone de jeu */
 }

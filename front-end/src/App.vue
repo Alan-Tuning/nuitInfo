@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import Header from './components/Header.vue'; // Importation du header
+<<<<<<< HEAD
 import StoryPopup from './components/StoryPopup.vue';
 
 
@@ -8,6 +9,8 @@ let story_message = "L'océan, vaste et mystérieux, existe depuis des millénai
 
 let show_story_popup = ref(true);
 
+=======
+>>>>>>> 62f35ff0b863d3e955af99050aabe26771248269
 </script>
 
 <template>
@@ -16,11 +19,13 @@ let show_story_popup = ref(true);
   <main>
     <test />
   </main>
-
-  <StoryPopup :message="story_message" :show_footer="show_story_popup" @close_popup="show_story_popup = false"/>
 </template>
 
 <style scoped>
+* {
+  background-color: #EBEBEB;
+}
+
 header {
   line-height: 1.5;
 }
@@ -31,6 +36,7 @@ header {
 } 
 
 @media (min-width: 1024px) {
+
   header {
     display: flex;
     place-items: center;

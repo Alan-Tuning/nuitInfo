@@ -13,6 +13,11 @@ const router = createRouter({
       name: 'cookie',
       component: () => import('../views/CookieView.vue'),
     },
+    {
+      path: '/captcha',
+      name: 'captcha',
+      component: () => import('../views/CaptchaView.vue'),
+    },
   ],
 })
 
