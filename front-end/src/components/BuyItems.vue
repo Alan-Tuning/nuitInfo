@@ -48,7 +48,6 @@ const confirmPurchase = () => {
         }
         if (item.id === 6) {
             const playTatata = (count) => {
-                console.log('Play tatata', count);
                 if (count > -1) {
                     TATATA.play();
                     setTimeout(() => playTatata(count - 1), 1000);
@@ -58,7 +57,6 @@ const confirmPurchase = () => {
             playTatata(item.count);
         } else if (item.id === 4) {
             const playSantiano = (count) => {
-                console.log('Play santiano', count);
                 if (count > -1) {
                     SANTIANO.play();
                     setTimeout(() => playSantiano(count - 1), 2000);
