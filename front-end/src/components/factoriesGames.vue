@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 
 const isBottomSectionVisible = ref(true);
-const isSvgSectionVisible = ref(false);
+const isSvgSectionVisible = ref(true);
 const isfinish = ref(false);
 const nb_on = ref(0)
 
