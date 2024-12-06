@@ -4,11 +4,11 @@
     <div class="wave wave1"></div>
     <div class="wave wave2"></div>
     <div class="wave wave3"></div>
-    <div v-for="fish in fishes" :key="fish.id" class="fish" :style="getStyle(fish)"  @click="handleClick">
+    <div v-for="fish in fishes" :key="fish.id" class="fish" :style="getStyle(fish)"  @click="handleClick" :data-id="fish.id">
       <img src="@/assets/poisson.png" alt="fish" class="fish-img"/>
     </div>
 
-    <div v-for="obstacle in obstacles" :key="obstacle.id" class="game-item" :style="getStyle(obstacle)" @click="handleClick">
+    <div v-for="obstacle in obstacles" :key="obstacle.id" class="game-item" :style="getStyle(obstacle)" @click="handleClick" :data-id="obstacle.id">
       <img src="@/assets/obstacle.png" alt="obstacle" class="obstacle-img"  />
     </div>
     <div id="game-menu" v-if="!running">
@@ -16,7 +16,6 @@
       <p v-if="gameOver">Vous avez collecté {{ collectedObstacle }} obstacles</p>
       <p v-if="gameOver">Vous avez collecté {{ fishes.length }} poissons</p>
       <p v-if="gameOver">Temps restant: {{ timer }}s</p>
-
       <button @click="startClick">Rejouer</button>
     </div>
   </div>
@@ -39,18 +38,20 @@ export default {
       gameOver: true,
       gameWon: false,
       animationFrame: null,
+      containerWidth: 800,
+      containerHeight: 600,
     };
   },
   methods: {
     startClick() {
       this.initGame();
-      this.running = true;
     },
     initGame() {
       this.obstacles = this.generateItems(7, "obstacle");
       this.fishes = this.generateItems(10, "fish");
       this.collectedObstacle = 0;
       this.timer = 10;
+      this.running = true;
       this.gameOver = false;
       this.gameWon = false;
 
@@ -64,8 +65,8 @@ export default {
       for (let i = 0; i < count; i++) {
         items.push({
           id: i,
-          x: Math.random() * 750 + 25,
-          y: Math.random() * 400 + 50,
+          x: Math.random() * (this.containerWidth - 60),
+          y: Math.random() * (this.containerHeight - 60),
           dx: 1 - Math.random() * 2,
           dy: 1 - Math.random() * 2,
           visible: true,
@@ -86,18 +87,15 @@ export default {
       };
     },
     moveFishes() {
-      const container = this.$refs.gameContainer;
-      const width = container.offsetWidth;
-      const height = container.offsetHeight;
       this.fishes.forEach((fish) => {
         fish.x += fish.dx * 2;
         fish.y += fish.dy * 2;
 
-        if (fish.x < 0 || fish.x + fish.size > width) {
+        if (fish.x < 0 || fish.x + fish.size > this.containerWidth) {
           fish.dx *= -1;
         }
 
-        if (fish.y < 0 || fish.y + fish.size > height) {
+        if (fish.y < 0 || fish.y + fish.size > this.containerHeight) {
           fish.dy *= -1;
         }
       });
@@ -112,18 +110,22 @@ export default {
       this.animationFrame = requestAnimationFrame(animate);
     },
     handleClick(event) {
-      // if item clicked is fish
-      const obj = event.target.parentElement;
+      // Vérifie si l'élément cliqué est un poisson
       if (event.target.classList.contains("fish-img")) {
-        const fish = event.target.parentElement;
-        fish.visible = false;
-        this.onFishClick(fish);
+        const fishId = parseInt(event.target.parentElement.dataset.id);
+        const fish = this.fishes.find((f) => f.id === fishId);
+        if (fish) {
+          this.onFishClick(fish);
+        }
       }
-      // if item clicked is obstacle
+      
+      // Vérifie si l'élément cliqué est un obstacle
       if (event.target.classList.contains("obstacle-img")) {
-        const obstacle = event.target.parentElement;
-        obstacle.visible = false;
-        this.onObstacleClick(obstacle);
+        const obstacleId = parseInt(event.target.parentElement.dataset.id);
+        const obstacle = this.obstacles.find((o) => o.id === obstacleId);
+        if (obstacle) {
+          this.onObstacleClick(obstacle);
+        }
       }
     },
 
@@ -142,12 +144,17 @@ export default {
         this.gameOver = true;
         this.gameWon = false;
         this.running = false;
-        this.message = "Vous avez gangé !";
+        this.message = "Vous avez gagné !";
         this.$emit("captchaValidated");
       }
     },
   },
   mounted() {
+    const container = this.$refs.gameContainer;
+    this.containerWidth = container.offsetWidth;
+    this.containerHeight = container.offsetHeight;
+
+    // Initialisation du jeu après récupération des dimensions du container
     this.initGame();
   },
 };
