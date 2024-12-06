@@ -1,16 +1,27 @@
 <template>
   <div id="game-view" ref="gameContainer">
+    <p>{{ collectedObstacle }}</p>
     <div class="wave wave1"></div>
     <div class="wave wave2"></div>
     <div class="wave wave3"></div>
-    <div v-for="fish in fishes" :key="fish.id" class="fish" :style="getStyle(fish)" @click="handleClick">
-      <img src="@/assets/poisson.png" alt="fish" class="fish-img" />
+    <div v-for="fish in fishes" :key="fish.id" class="fish" :style="getStyle(fish)"  @click="handleClick">
+      <img src="@/assets/poisson.png" alt="fish" class="fish-img"/>
     </div>
 
     <div v-for="obstacle in obstacles" :key="obstacle.id" class="game-item" :style="getStyle(obstacle)" @click="handleClick">
-      <img src="@/assets/obstacle.png" alt="obstacle" class="obstacle-img" />
+      <img src="@/assets/obstacle.png" alt="obstacle" class="obstacle-img"  />
+    </div>
+    <div id="game-menu" v-if="!running">
+      <h2 v-if="gameOver">{{ gameWon ? "Bravo! Vous avez gagné!" : "Désolé! Vous avez perdu!" }}</h2>
+      <p v-if="gameOver">Vous avez collecté {{ collectedObstacle }} obstacles</p>
+      <p v-if="gameOver">Vous avez collecté {{ fishes.length }} poissons</p>
+      <p v-if="gameOver">Temps restant: {{ timer }}s</p>
+
+      <button @click="startClick">Rejouer</button>
     </div>
   </div>
+
+
 </template>
 
 <script>
@@ -24,6 +35,7 @@ export default {
       fishes: [],
       collectedObstacle: 0,
       timer: 10,
+      running: false,
       gameOver: true,
       gameWon: false,
       animationFrame: null,
@@ -32,6 +44,7 @@ export default {
   methods: {
     startClick() {
       this.initGame();
+      this.running = true;
     },
     initGame() {
       this.obstacles = this.generateItems(7, "obstacle");
@@ -55,6 +68,7 @@ export default {
           y: Math.random() * 400 + 50,
           dx: 1 - Math.random() * 2,
           dy: 1 - Math.random() * 2,
+          visible: true,
           size: 60,
           type,
         });
@@ -68,6 +82,7 @@ export default {
         top: `${item.y}px`,
         width: `${item.size}px`,
         height: `${item.size}px`,
+        display: item.visible ? "block" : "none",
       };
     },
     moveFishes() {
@@ -98,32 +113,37 @@ export default {
     },
     handleClick(event) {
       // if item clicked is fish
+      const obj = event.target.parentElement;
       if (event.target.classList.contains("fish-img")) {
-        const fish = this.fishes.find((f) => f.id === Number(event.target.parentElement.id));
+        const fish = event.target.parentElement;
+        fish.visible = false;
         this.onFishClick(fish);
       }
-
       // if item clicked is obstacle
       if (event.target.classList.contains("obstacle-img")) {
-        const obstacle = this.obstacles.find((o) => o.id === Number(event.target.parentElement.id));
+        const obstacle = event.target.parentElement;
+        obstacle.visible = false;
         this.onObstacleClick(obstacle);
       }
     },
 
     onFishClick(fish) {
-      this.fishes = this.fishes.filter((f) => f.id !== fish.id);
-      if (this.fishes.length === 0) {
+      fish.visible = false;
+      if (this.fishes.every((f) => !f.visible)) {
         this.gameOver = true;
         this.gameWon = true;
       }
     },
 
     onObstacleClick(obstacle) {
-      this.obstacles = this.obstacles.filter((o) => o.id !== obstacle.id);
+      obstacle.visible = false;
       this.collectedObstacle++;
       if (this.collectedObstacle === 7) {
         this.gameOver = true;
         this.gameWon = false;
+        this.running = false;
+        this.message = "Vous avez gangé !";
+        this.$emit("captchaValidated");
       }
     },
   },
@@ -196,9 +216,11 @@ export default {
   0% {
     transform: translateX(-50%) translateY(0);
   }
+
   50% {
     transform: translateX(-50%) translateY(30px);
   }
+
   100% {
     transform: translateX(-50%) translateY(0);
   }
