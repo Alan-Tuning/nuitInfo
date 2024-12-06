@@ -5,6 +5,8 @@ import HelloWorld from '../components/HelloWorld.vue';
 import FishingGame from '../components/FishingGame.vue';
 import game_plastique from '@/components/game_plastique.vue';
 import StoryPopup from '../components/StoryPopup.vue';
+import factoriesGames from '../components/factoriesGames.vue';
+
 
 let story_message = ref("L'océan, vaste et mystérieux, existe depuis des millénaires. Il a traversé les âges, portant en son sein la naissance et l'évolution de formes de vie infiniment diverses. Comme les cellules d'un corps vivant, ces créatures marines se sont multipliées, chacune apportant une spécificité unique à l'ensemble de cet écosystème fascinant.");
 let show_story_popup = ref(true);
@@ -12,7 +14,10 @@ const womanVisible = ref(true);
 const currentComponent = ref(null);
 
 const handleCloudSelection = (id) => {
-  if (id == 4) {
+    if (id == 3) {
+    currentComponent.value = factoriesGames;
+  }
+  else if (id == 4) {
     currentComponent.value = game_plastique;
   } else if (id === 5) {
     currentComponent.value = HelloWorld;
