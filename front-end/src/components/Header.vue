@@ -54,6 +54,7 @@ defineProps({
         <ul class="l-navigation__items">
           <li><RouterLink to="/cookie">Plastic Clicker</RouterLink></li>
           <li> <RouterLink to="/podcast">Podcasts</RouterLink></li>
+          <li> <RouterLink to="/captcha">Captcha</RouterLink></li>
         </ul>
       </nav>
       <!-- Support Button -->
