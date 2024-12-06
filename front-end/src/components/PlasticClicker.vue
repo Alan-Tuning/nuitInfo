@@ -1,17 +1,14 @@
 <template>
     <div class="parent">
+        <div class="plastic-bag" :class="{ 'clicked': isClicked }" @click="clickBag">
+            <img src="@/assets/plastic-bag.png" alt="Sac plastique à recycler" draggable="true" :style="{ width: width_bag + '%', marginLeft: left_bag + '%', marginTop:top_bag + '%'}">
+        </div>
             <div class="plastic-clicker">
                 <h1>Plastic Clicker</h1>
-
                 <div class="score-section">
                     <p>Points accumulés : {{ points.toFixed(2) }}</p>
                     <p>Sacs plastiques recyclés : {{ recycledBags }}</p>
                 </div>
-
-                <div class="plastic-bag" :class="{ 'clicked': isClicked }" @click="clickBag">
-                    <img src="@/assets/plastic-bag.png" alt="Sac plastique à recycler" draggable="true" :style="{ width: width_bag + 'px' }">
-                </div>
-
             </div>
         <div class="div3">
             <BuyItems :points="points" @buy-upgrade="buyUpgrade" />
@@ -28,6 +25,8 @@ import BuyItems from './BuyItems.vue';
 const points = ref(0);
 const recycledBags = ref(0);
 const width_bag = ref(100.0);
+const left_bag = ref(100.0);
+const top_bag = ref(100.0);
 
 // État du clic
 const isClicked = ref(false);
@@ -48,8 +47,10 @@ const clickBag = () => {
         isClicked.value = false;
     }, 100);
 
-    clickBag.value = Math.random()*1000
-    console.log(clickBag.value)
+    width_bag.value = Math.random()*50 + 5 
+    left_bag.value = Math.random()*150
+    top_bag.value = Math.random()*100
+    console.log(left_bag.value)
 
 };
 
@@ -77,10 +78,10 @@ onUnmounted(() => {
 
 <style scoped>
 .parent {
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: space-between; /* Ajoute de l'espace entre les éléments */
-    align-items: center; /* Centre les éléments verticalement */
     padding: 20px;
 }
 
@@ -90,14 +91,14 @@ onUnmounted(() => {
     flex-direction: column;
     text-align: center;
     padding: 20px;
-    background-color: #f0f0f0;
     border-radius: 10px;
 }
 
 .plastic-bag {
     cursor: pointer;
+    position: absolute; /* Positionne l'élément de manière absolue */
+    z-index: 1000; /* Assurez-vous que l'élément est au-dessus de tous les autres */
     transition: transform 0.1s;
-    display: inline-block;
 }
 
 .plastic-bag.clicked {
@@ -105,7 +106,7 @@ onUnmounted(() => {
 }
 
 .plastic-bag img {
-    max-width: 200px;
+    max-width: 500px;
     user-select: none;
 }
 
@@ -115,7 +116,6 @@ onUnmounted(() => {
     flex-direction: column;
     margin: 20px 0;
     padding: 10px;
-    background-color: white;
     border-radius: 5px;
 }
 

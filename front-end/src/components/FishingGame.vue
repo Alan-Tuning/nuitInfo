@@ -48,7 +48,7 @@
         if (this.clickCoral1 >= 2 && this.clickCoral2 >= 2) {
           this.hideNet = true;
           const cloudSelectedEvent = new CustomEvent('cloudSelected', {
-            detail: null,
+            detail: -2,
         });
         window.dispatchEvent(cloudSelectedEvent);
         }
@@ -58,7 +58,43 @@
   </script>
   
   <style scoped>
-.svg-container {
+  
+  .boat-svg, .net-svg, .coral1-svg, .coral2-svg {
+    position: absolute;
+    width: 20%;
+    height: auto;
+  }
+  
+  .boat-svg, .net-svg {
+    background-color: #EBEBEB;
+  }
+  
+  .boat-svg {
+    top: 10%;
+    left: 40%;
+  }
+  
+  .net-svg {
+    top: 50%;
+    left: 40%;
+  }
+  
+  .coral1-svg {
+    width: 10%;
+    top: 70%;
+    left: 40%;
+  }
+  
+  .coral2-svg {
+    width: 10%;
+    top: 70%;
+    left: 50%;
+  }
+
+@media (max-width: 780px) {
+    
+
+  .svg-container {
     position: absolute;
     top: 10%;
     left: 50%;
@@ -73,7 +109,6 @@
   }
   
   .boat-svg, .net-svg, .coral1-svg, .coral2-svg {
-    background-color: #EBEBEB;
     position: absolute;
     width: 100%;
     height: auto;
@@ -95,76 +130,15 @@
   
   .coral1-svg {
     width: 30%;
-    top: 0%;
-    left: 50%;
-    transform: translateX(-50%);
-    }
-
-    .net-svg {
-    height: 40%;
-    top: 60%;
-    left: 50%;
-    transform: translateX(-50%);
-    }
-
-    .coral1-svg {
-    width: 8%;
-    top: 65%;
-    left: 40%;
-    }
-
-    .coral2-svg {
-    width: 8%;
-    top: 65%;
-    left: 50%;
-    }
-
-    @media (max-width: 780px) {
-        .svg-container {
-        position: absolute;
-        top: 10%;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 90%;
-        height: 90%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-    
-        .boat-svg, .net-svg, .coral1-svg, .coral2-svg {
-            position: absolute;
-            width: 100%;
-            height: auto;
-        }
-        
-        .boat-svg, .net-svg {
-            background-color: #EBEBEB;
-        }
-        
-        .boat-svg {
-            top: 5%;
-            left: 0;
-        }
-        
-        .net-svg {
-            top: 50%;
-            left: 0;
-        }
-        
-        .coral1-svg {
-            width: 30%;
-            top: 70%;
-            left: 20%;
-        }
-    
-        .coral2-svg {
-            width: 30%;
-            top: 70%;
-            left: 60%;
-        }
-
-    }
+    top: 70%;
+    left: 20%;
+  }
+  
+  .coral2-svg {
+    width: 30%;
+    top: 70%;
+    left: 60%;
+  }
+}
   </style>
   

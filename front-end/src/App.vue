@@ -11,9 +11,7 @@ import Header from './components/Header.vue'; // Importation du header
 </template>
 
 <style scoped>
-* {
-  background-color: #EBEBEB;
-}
+
 
 header {
   line-height: 1.5;
