@@ -2,9 +2,7 @@
 
 <template>
     <div>
-        <h1>CookieView</h1>
-        <PlasticClicker />
-        
+        <PlasticClicker />        
     </div>
 </template>
 
@@ -16,10 +14,3 @@
     import PlasticClicker from '../components/PlasticClicker.vue';
 
 </script>
-
-<style scoped>
-    h1 {
-        color: red;
-    }
-
-</style>
