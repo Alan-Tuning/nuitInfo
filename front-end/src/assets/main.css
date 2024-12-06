@@ -1,9 +1,8 @@
 @import './base.css';
 
 #app {
-  margin: 0 auto;
-  padding: 0rem;
   font-weight: normal;
+  width: 100%;
 }
 
 a,
@@ -27,8 +26,5 @@ a,
   }
 
   #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
   }
 }

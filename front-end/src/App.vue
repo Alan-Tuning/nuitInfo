@@ -1,5 +1,6 @@
 <script setup>
-import Header from './components/Header.vue';
+import FactoriesGames from './components/factoriesGames.vue';
+import Header from './components/Header.vue'; // Importation du header
 </script>
 
 <template>
