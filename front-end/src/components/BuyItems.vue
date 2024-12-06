@@ -15,13 +15,13 @@ const props = defineProps({
 const emit = defineEmits(['buy-upgrade']);
 
 const items = ref([
-    { id: 1, name: 'Champignon qui mange plastique', price: 1.99, bonus: 1, count: 0 },
-    { id: 2, name: 'Jacques-Yves Cousteau', price: 999.50, bonus: 5, count: 0 },
-    { id: 3, name: 'DeLorean qui consomme les déchets', price: 1499.00, bonus: 10, count: 0 },
-    { id: 4, name: 'Hugues Aufray qui chante', price: 0.99, bonus: 2, count: 0 },
-    { id: 5, name: 'Un bateau de nettoyage', price: 2999.99, bonus: 20, count: 0 },
-    { id: 6, name: 'Renaud c\'est la mer qui prend l\'homme TATATA', price: 0.99, bonus: 1, count: 0 },
-    { id: 7, name: 'Le paradis', price: 6000000, bonus: -45, count: 0 },
+    { id: 1, name: 'Champignon qui mange plastique', price: 1.99, bonus: 1, count: 0, img: "@/assets/champignon.png" },
+    { id: 2, name: 'Jacques-Yves Cousteau', price: 999.50, bonus: 5, count: 0, img: "@/assets/cousteau.png" },
+    { id: 3, name: 'DeLorean qui consomme les déchets', price: 1499.00, bonus: 10, count: 0, img: "@/assets/dolorean.png" },
+    { id: 4, name: 'Hugues Aufray qui chante', price: 0.99, bonus: 2, count: 0, img: "@/assets/Hugues.png" },
+    { id: 5, name: 'Un bateau de nettoyage', price: 2999.99, bonus: 20, count: 0, img: "@/assets/bateau.png" },
+    { id: 6, name: 'Renaud c\'est la mer qui prend l\'homme TATATA', price: 0.99, bonus: 1, count: 0, img: "@/assets/Renaud.png" },
+    { id: 7, name: 'Le paradis', price: 6000000, bonus: -45, count: 0, img: "assets/paradis.png" },
 ]);
 
 const selectedItem = ref('');
@@ -86,12 +86,67 @@ const cancelPurchase = () => {
         <h1 class="title">Améliorations</h1>
 
         <div class="items-list">
-            <div v-for="item in items" :key="item.id" class="item" @click="selectItem(item)" :class="{
-                selected: item.name === selectedItem,
-                disabled: item.price > points
-            }">
-                {{ item.name }} - {{ item.price }} €
-                <span v-if="item.count > 0"> (Acheté : {{ item.count }} fois)</span>
+            <div :key="1" class="item" @click="selectItem(items[0])" :class="{
+                selected: items[0].name === selectedItem,
+                disabled: items[0].price > points
+            }" style="text-align : left">
+                <img src="@/assets/champignon.png" height="40" width="40">
+                {{ items[0].name }} - {{ items[0].price }} €
+                <span v-if="items[0].count > 0"> (Acheté : {{ items[0].count }} fois)</span>
+            </div>
+
+            <div :key="2" class="item" @click="selectItem(items[1])" :class="{
+                selected: items[1].name === selectedItem,
+                disabled: items[1].price > points
+            }" style="text-align : left">
+                <img src="@/assets/cousteau.png" height="40" width="40">
+                {{ items[1].name }} - {{ items[1].price }} €
+                <span v-if="items[1].count > 0"> (Acheté : {{ items[1].count }} fois)</span>
+            </div>
+
+            <div :key="3" class="item" @click="selectItem(items[2])" :class="{
+                selected: items[2].name === selectedItem,
+                disabled: items[2].price > points
+            }" style="text-align : left">
+                <img src="@/assets/dolorean.png" height="40" width="40">
+                {{ items[2].name }} - {{ items[2].price }} €
+                <span v-if="items[2].count > 0"> (Acheté : {{ items[2].count }} fois)</span>
+            </div>
+
+            <div :key="4" class="item" @click="selectItem(items[3])" :class="{
+                selected: items[3].name === selectedItem,
+                disabled: items[3].price > points
+            }" style="text-align : left">
+                <img src="@/assets/Hugues.png" height="40" width="40">
+                {{ items[3].name }} - {{ items[3].price }} €
+                <span v-if="items[3].count > 0"> (Acheté : {{ items[3].count }} fois)</span>
+            </div>
+
+            <div :key="5" class="item" @click="selectItem(items[4])" :class="{
+                selected: items[4].name === selectedItem,
+                disabled: items[4].price > points
+            }" style="text-align : left">
+                <img src="@/assets/bateau.png" height="40" width="40">
+                {{ items[4].name }} - {{ items[4].price }} €
+                <span v-if="items[4].count > 0"> (Acheté : {{ items[4].count }} fois)</span>
+            </div>
+
+            <div :key="6" class="item" @click="selectItem(items[5])" :class="{
+                selected: items[5].name === selectedItem,
+                disabled: items[5].price > points
+            }" style="text-align : left">
+                <img src="@/assets/Renaud.png" height="40" width="40">
+                {{ items[5].name }} - {{ items[5].price }} €
+                <span v-if="items[5].count > 0"> (Acheté : {{ items[5].count }} fois)</span>
+            </div>
+
+            <div :key="7" class="item" @click="selectItem(items[6])" :class="{
+                selected: items[6].name === selectedItem,
+                disabled: items[6].price > points
+            }" style="text-align : left">
+                <img src="@/assets/paradis.png" height="40" width="40">
+                {{ items[6].name }} - {{ items[6].price }} €
+                <span v-if="items[6].count > 0"> (Acheté : {{ items[6].count }} fois)</span>
             </div>
         </div>
 

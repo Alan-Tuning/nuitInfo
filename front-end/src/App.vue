@@ -1,5 +1,4 @@
 <script setup>
-import FactoriesGames from './components/factoriesGames.vue';
 import Header from './components/Header.vue'; // Importation du header
 </script>
 
@@ -12,9 +11,7 @@ import Header from './components/Header.vue'; // Importation du header
 </template>
 
 <style scoped>
-* {
-  background-color: #EBEBEB;
-}
+
 
 header {
   line-height: 1.5;

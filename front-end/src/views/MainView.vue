@@ -24,7 +24,7 @@ const currentComponent = ref(null);
 const handleCloudSelection = (id) => {
     if (id == 3) {
     currentComponent.value = factoriesGames;
-    show_story("Tout comme la fièvre peut indiquer un dysfonctionnement dans le corps humain, la fonte des glaciers est un indicateur préoccupant du réchauffement climatique, un problème global qui menace notre planète et ses écosystèmes. L’industrialisation massive à l’origine de ce réchauffement doit être contrôlée.")
+    show_story("Tout comme la fièvre peut indiquer un dysfonctionnement dans le corps humain, la fonte des glaciers est un indicateur préoccupant du réchauffement climatique, un problème global qui menace notre planète et ses écosystèmes. L’industrialisation massive à l’origine de ce réchauffement doit être contrôlée. Éteint les centrales pour éviter la fonte des glaces.")
   }
   else if (id == 4) {
     currentComponent.value = game_plastique;
@@ -33,8 +33,21 @@ const handleCloudSelection = (id) => {
     currentComponent.value = HelloWorld;
   } else if (id === 2) {
     currentComponent.value = FishingGame;
-    show_story("Les troubles respiratoires touchent de nombreuses personnes. Les coraux sont à l'océan ce que les poumons sont à l'humain. En raison des pratiques destructrices des pêcheurs qui raclent les fonds marins, ils sont menacés de disparition.");
-  } else {
+    show_story("Les troubles respiratoires touchent de nombreuses personnes. Les coraux sont à l'océan ce que les poumons sont à l'humain. En raison des pratiques destructrices des pêcheurs qui raclent les fonds marins, ils sont menacés de disparition. Appui deux fois sur chaque coraux pour les libérer.");
+  } else if (id == -2) {
+    currentComponent.value = null;
+    show_story("Bravo ! Vous avez protégé les coraux !");
+  } 
+  else if (id == -4){
+    currentComponent.value = null;
+    show_story("Bravo ! Vous avez nettoyé l'océean !");
+  }
+  else if (id == -3){
+    currentComponent.value = null;
+    show_story("Bravo ! Vous avez protégé les glaciers !");
+  }
+  
+  else {
     currentComponent.value = null;
   }
   womanVisible.value = !currentComponent.value;
