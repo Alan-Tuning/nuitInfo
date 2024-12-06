@@ -47,7 +47,6 @@
       checkHideNet() {
         if (this.clickCoral1 >= 2 && this.clickCoral2 >= 2) {
           this.hideNet = true;
-          setInterval(2000);
           const cloudSelectedEvent = new CustomEvent('cloudSelected', {
             detail: null,
         });
