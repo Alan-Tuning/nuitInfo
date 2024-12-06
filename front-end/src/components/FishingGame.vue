@@ -58,6 +58,42 @@
   </script>
   
   <style scoped>
+  
+  .boat-svg, .net-svg, .coral1-svg, .coral2-svg {
+    position: absolute;
+    width: 20%;
+    height: auto;
+  }
+  
+  .boat-svg, .net-svg {
+    background-color: #EBEBEB;
+  }
+  
+  .boat-svg {
+    top: 10%;
+    left: 40%;
+  }
+  
+  .net-svg {
+    top: 50%;
+    left: 40%;
+  }
+  
+  .coral1-svg {
+    width: 10%;
+    top: 70%;
+    left: 40%;
+  }
+  
+  .coral2-svg {
+    width: 10%;
+    top: 70%;
+    left: 50%;
+  }
+
+@media (max-width: 780px) {
+    
+
   .svg-container {
     position: absolute;
     top: 10%;
@@ -103,5 +139,6 @@
     top: 70%;
     left: 60%;
   }
+}
   </style>
   
