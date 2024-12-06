@@ -6,7 +6,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('../App.vue'),
+      component: () => import('../views/MainView.vue'),
     },
     {
       path: '/cookie',

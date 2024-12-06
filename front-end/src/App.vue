@@ -1,36 +1,12 @@
 <script setup>
-import { ref } from 'vue';
 import Header from './components/Header.vue';
-import Woman from './components/Woman.vue';
-import HelloWorld from './components/HelloWorld.vue';
-import TheWelcome from './components/TheWelcome.vue';
-
-const currentComponent = ref(null);
-
-const handleCloudSelection = (id) => {
-  if (id === 5) {
-    currentComponent.value = HelloWorld;
-  } else if (id === 2) {
-    currentComponent.value = TheWelcome;
-  } else {
-    currentComponent.value = null; 
-  }
-};
-
-window.addEventListener('cloudSelected', (event) => {
-  handleCloudSelection(event.detail);
-});
 </script>
 
 <template>
   <Header />
 
   <main>
-    <Woman v-if="!currentComponent" />
-
-    <div v-if="currentComponent" class="dynamic-component">
-      <component :is="currentComponent" />
-    </div>
+    <RouterView />
   </main>
 </template>
 
