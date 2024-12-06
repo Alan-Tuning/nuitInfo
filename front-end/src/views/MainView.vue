@@ -4,6 +4,7 @@ import Woman from '../components/Woman.vue';
 import HelloWorld from '../components/HelloWorld.vue';
 import FishingGame from '../components/FishingGame.vue';
 import game_plastique from '@/components/game_plastique.vue';
+import DynamicPage from '../components/DynamicPage.vue';
 import StoryPopup from '../components/StoryPopup.vue';
 import factoriesGames from '../components/factoriesGames.vue';
 
@@ -42,15 +43,53 @@ const handleCloudSelection = (id) => {
 window.addEventListener('cloudSelected', (event) => {
   handleCloudSelection(event.detail);
 });
+
+const toggleValue = ref(false)
+
+const dynamicProps = ref({
+  someProp: 'Initial Prop Value',
+  anotherProp: 123,
+  q_nb : 1,
+  question: "Quel est l'un des principaux effets de la fonte des glaces polaires sur les océans ?",
+  questionProps: {
+    1 : "Augmentation de la salinité des océans",
+    2 : "Réduction du niveau de la mer",
+    3 : "Augmentation du niveau de la mer",
+    4 : "Diminution de la température de l'eau"
+  },
+  correctAnswer: 3,
+});
+
+function toggleComponent() {
+  toggleValue.value = !toggleValue.value;
+  if (toggleValue.value) {
+    dynamicProps.value = {
+      someProp: 'NOT Initial Prop Value',
+      anotherProp: 69400,
+    };
+  } else {
+    dynamicProps.value = {
+      someProp: 'LSKDHFLSKDHFL',
+      anotherProp: 80085,
+    };
+  }
+}
 </script>
 
 <template>
   <div>
     <Woman :class="{ hidden: !womanVisible }" />
 
-    <div v-if="currentComponent" class="dynamic-component">
-      <component :is="currentComponent" />
-    </div>
+        <div v-if="currentComponent" class="dynamic-component">
+        <component :is="currentComponent" />
+        </div>
+        <button @click="toggleComponent()">
+          Switch component
+        </button>
+        <DynamicPage
+          upper-msg="Le cœur, lorsqu'il est affecté par l'hypertension, subit une pression intense. Cette même pression pèse sur les courants océaniques, perturbés par le réchauffement climatique, cela met en péril l'équilibre de notre planète. Voici un podcast pour en savoir plus." middle-title="OHOHOHO" 
+          dynamic-component="QuizPage" :dynamic-props="dynamicProps" />
+    
   </div>
 
   <StoryPopup :message="story_message" :show_footer="show_story_popup" @close_popup="show_story_popup = false"/>
