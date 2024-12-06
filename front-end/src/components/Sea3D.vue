@@ -1,5 +1,6 @@
 <template>
     <div ref="oceanContainer" class="ocean-background"></div>
+    <FlyingBirds ref="birdsRef" />
   </template>
   
   <script setup>
@@ -7,8 +8,11 @@
   import * as THREE from 'three';
   import { Water } from 'three/examples/jsm/objects/Water.js';
   import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-  
-  const oceanContainer = ref(null);
+    import FlyingBirds from './FlyingBirds.vue';
+
+
+const oceanContainer = ref(null);
+const birdsRef = ref(null);
   
   let scene, camera, renderer, water, controls;
   const SCREEN_WIDTH = window.innerWidth;
@@ -36,6 +40,10 @@
     controls.target.set(0, 10, 0);
     controls.minDistance = 40;
     controls.maxDistance = 200;
+
+    if (birdsRef.value) {
+    birdsRef.value.initBirds(scene, camera, renderer);
+  } 
   
     // Configurer l'éclairage
     const light = new THREE.DirectionalLight(0xffffff, 0.8);
