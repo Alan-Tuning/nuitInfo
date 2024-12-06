@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 
 const isBottomSectionVisible = ref(true);
-const isSvgSectionVisible = ref(false);
+const isSvgSectionVisible = ref(true);
 const isfinish = ref(false);
 const nb_on = ref(0)
 
@@ -191,7 +191,7 @@ const toggleIcon4 = () => {
 }
 
 .bottom-section {
-	background-color: #080E1E;
+	background-color: #EBEBEB;
 	color: white;
 	padding: 20px;
 	text-align: center;
@@ -200,7 +200,7 @@ const toggleIcon4 = () => {
 .firstbutton {
 	margin-top: 20px;
 	padding: 10px 20px;
-	background-color: #080E1E;
+	background-color: #EBEBEB;
 	color: white;
 	border: none;
 	border-radius: 5px;
