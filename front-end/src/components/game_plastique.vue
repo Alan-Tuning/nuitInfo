@@ -126,6 +126,11 @@ const dragEnd = (event) => {
     // Si c'est un sac plastique, gagner un point; sinon, perdre un point (si c'est un poisson)
     score.value += dernierPoint.isFish ? -1 : 1; 
 
+    if (score.value >= 5) {
+      congratulationsMessage.value = 'Félicitations! Vous avez gagné!';
+      gameOver.value = true; // Afficher le message de fin de jeu
+    }
+
     // Supprimer le point collecté
     points.value = points.value.filter(p => p.id !== dernierPoint.id);
 
@@ -180,6 +185,10 @@ const touchEnd = (event) => {
     touchY <= basketRect.bottom
   ) {
     score.value += dernierPoint.isFish ? -1 : 1; // Perdre un point si c'est un poisson, gagner un point sinon
+    if (score.value >= 5) {
+      congratulationsMessage.value = 'Félicitations! Vous avez gagné!';
+      gameOver.value = true; // Afficher le message de fin de jeu
+    }
     points.value = points.value.filter(p => p.id !== dernierPoint.id); // Supprimer le point collecté
     generatePoint(dernierPoint.isFish); // Ajouter un nouveau point (poisson ou sac plastique)
   }
