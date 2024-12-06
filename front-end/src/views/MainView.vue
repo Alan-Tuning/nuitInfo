@@ -32,7 +32,7 @@ const handleCloudSelection = (id) => {
     currentComponent.value = HelloWorld;
   } else if (id === 2) {
     currentComponent.value = FishingGame;
-    show_story("Les troubles respiratoires touchent de nombreuses personnes. Les coraux sont à l'océan ce que les poumons sont à l'humain. En raison des pratiques destructrices des pêcheurs qui raclent les fonds marins, ils sont menacés de disparition.");
+    show_story("Les troubles respiratoires touchent de nombreuses personnes. Les coraux sont à l'océan ce que les poumons sont à l'humain. En raison des pratiques destructrices des pêcheurs qui raclent les fonds marins, ils sont menacés de disparition. Appui deux fois sur chaque coraux pour les libérer.");
   } else if (id == -2) {
     currentComponent.value = null;
     show_story("Bravo ! Vous avez protégé les coraux !");
