@@ -3,7 +3,7 @@
 <template>
     <div>
         <h1>CookieView</h1>
-        <PlasticGame />
+        <PlasticClicker />
         
     </div>
 </template>
@@ -13,7 +13,7 @@
     import { ref } from 'vue';
 
     import BuyItems from '../components/BuyItems.vue';
-    import PlasticGame from '../components/PlasticGame.vue';
+    import PlasticClicker from '../components/PlasticClicker.vue';
 
 </script>
 

@@ -17,6 +17,7 @@ const items = ref([
   { id: 4, name: 'Hugues Aufray qui chante', price: 249.99, bonus: 2, count: 0 },
   { id: 5, name: 'Un bateau de nettoyage', price: 2999.99, bonus: 20, count: 0 },
   { id: 6, name: 'Renaud c\'est la mer qui prend l\'homme TATATA', price: 79.99, bonus: 1, count: 0 },
+  { id: 7, name: 'Le paradis', price: 6000000, bonus: -45, count: 0 },
 ]);
 
 const selectedItem = ref('');
