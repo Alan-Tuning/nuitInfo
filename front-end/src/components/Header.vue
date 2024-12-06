@@ -21,6 +21,7 @@ defineProps({
     default: 'Menu',
   },
 });
+
 </script>
 
 <template>
