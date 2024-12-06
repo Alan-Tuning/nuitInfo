@@ -52,11 +52,8 @@ defineProps({
         aria-hidden="!isMenuOpen"
       >
         <ul class="l-navigation__items">
-          <li><a href="#programs" class="l-navigation__link">Nos programmes</a></li>
-          <li><a href="#odyssey" class="l-navigation__link">Odyssée 2025 - 2027</a></li>
-          <li><a href="#team" class="l-navigation__link">L'équipe</a></li>
-          <li><a href="#partners" class="l-navigation__link">Les partenaires</a></li>
-          <li><RouterLink to="/cookie">Go to cookie</RouterLink></li>
+          <li><RouterLink to="/cookie">Plastic Clicker</RouterLink></li>
+          <li> <RouterLink to="/podcast">Podcasts</RouterLink></li>
         </ul>
       </nav>
       <!-- Support Button -->
