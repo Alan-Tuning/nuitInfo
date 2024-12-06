@@ -81,7 +81,6 @@ console.log(props.message)
     height: 100%;
     z-index: -2;
 }
-
 button {
     background-color: #ffffff00;
     color: white;
@@ -94,6 +93,11 @@ button {
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
+}
+
+button:hover {
+    background-color: #EBEBEB;
+    color: #080E1E;
 }
 
 
