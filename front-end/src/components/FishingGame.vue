@@ -73,6 +73,7 @@
   }
   
   .boat-svg, .net-svg, .coral1-svg, .coral2-svg {
+    background-color: #EBEBEB;
     position: absolute;
     width: 100%;
     height: auto;
@@ -139,7 +140,7 @@
         }
         
         .boat-svg, .net-svg {
-            background-color: #080E1E;
+            background-color: #EBEBEB;
         }
         
         .boat-svg {
