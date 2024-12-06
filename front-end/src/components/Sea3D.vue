@@ -24,10 +24,12 @@ const birdsRef = ref(null);
     scene.background = new THREE.Color(0x87CEEB);
   
     // Configurer la caméra
-    camera = new THREE.PerspectiveCamera(55, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 20000);
+    camera = new THREE.PerspectiveCamera(55, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 200000);
     camera.position.set(30, 30, 100);
     camera.lookAt(scene.position);
   
+
+    
     // Configurer le renderer
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(window.devicePixelRatio);

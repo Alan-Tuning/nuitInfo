@@ -3,12 +3,12 @@
     <div class="wave wave1"></div>
     <div class="wave wave2"></div>
     <div class="wave wave3"></div>
-    <div v-for="fish in fishes" :key="fish.id" class="fish" :style="getStyle(fish)">
-      <img src="../../assets/poisson.png" alt="fish" class="fish-img" />
+    <div v-for="fish in fishes" :key="fish.id" class="fish" :style="getStyle(fish)" @click="handleClick">
+      <img src="@/assets/poisson.png" alt="fish" class="fish-img" />
     </div>
 
-    <div v-for="obstacle in obstacles" :key="obstacle.id" class="game-item" :style="getStyle(obstacle)">
-      <img src="../../assets/obstacle.png" alt="obstacle" class="obstacle-img" @click="handleClick" />
+    <div v-for="obstacle in obstacles" :key="obstacle.id" class="game-item" :style="getStyle(obstacle)" @click="handleClick">
+      <img src="@/assets/obstacle.png" alt="obstacle" class="obstacle-img" />
     </div>
   </div>
 </template>
@@ -97,25 +97,33 @@ export default {
       this.animationFrame = requestAnimationFrame(animate);
     },
     handleClick(event) {
-      const rect = this.$refs.gameContainer?.getBoundingClientRect();
-      if (rect) {
-        const clickX = event.clientX - rect.left;
-        const clickY = event.clientY - rect.top;
+      // if item clicked is fish
+      if (event.target.classList.contains("fish-img")) {
+        const fish = this.fishes.find((f) => f.id === Number(event.target.parentElement.id));
+        this.onFishClick(fish);
+      }
 
-        this.obstacles = this.obstacles.filter((obstacle) => {
-          const dist = Math.hypot(clickX - obstacle.x, clickY - obstacle.y);
-          if (dist < obstacle.size / 2) {
-            this.collectedObstacle++;
-            return false;
-          }
-          return true;
-        });
+      // if item clicked is obstacle
+      if (event.target.classList.contains("obstacle-img")) {
+        const obstacle = this.obstacles.find((o) => o.id === Number(event.target.parentElement.id));
+        this.onObstacleClick(obstacle);
+      }
+    },
 
-        if (this.collectedObstacle >= 5) {
-          this.gameOver = true;
-          this.gameWon = true;
-          cancelAnimationFrame(this.animationFrame);
-        }
+    onFishClick(fish) {
+      this.fishes = this.fishes.filter((f) => f.id !== fish.id);
+      if (this.fishes.length === 0) {
+        this.gameOver = true;
+        this.gameWon = true;
+      }
+    },
+
+    onObstacleClick(obstacle) {
+      this.obstacles = this.obstacles.filter((o) => o.id !== obstacle.id);
+      this.collectedObstacle++;
+      if (this.collectedObstacle === 7) {
+        this.gameOver = true;
+        this.gameWon = false;
       }
     },
   },
