@@ -163,7 +163,7 @@ const drop = (event, point) => {
 // Fonction pour redémarrer le jeu (revenir à l'accueil)
 const restartGame = () => {
   const cloudSelectedEvent = new CustomEvent('cloudSelected', {
-    detail: null,
+    detail: -4,
   });
   window.dispatchEvent(cloudSelectedEvent);
 };
