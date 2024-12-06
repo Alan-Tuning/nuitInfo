@@ -1,6 +1,6 @@
 <script setup>
 import Header from './components/Header.vue'; // Importation du header
-import TheWelcome from './components/TheWelcome.vue';
+import TheWelcome from './components/game_plastique.vue'; // Importation du jeu
 </script>
 
 <template>
