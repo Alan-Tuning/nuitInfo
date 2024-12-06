@@ -69,6 +69,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background-color: #EBEBEB;
   }
   
   .boat-svg, .net-svg, .coral1-svg, .coral2-svg {
@@ -78,7 +79,7 @@
   }
   
   .boat-svg, .net-svg {
-    background-color: #080E1E;
+    background-color: #EBEBEB;
   }
   
   .boat-svg {
