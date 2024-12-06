@@ -9,7 +9,7 @@ import Woman from './components/Woman.vue';
 
 
   <main>
-    <Woman />
+    <RouterView />
   </main>
 </template>
 

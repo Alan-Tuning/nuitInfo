@@ -57,13 +57,13 @@ defineProps({
           <li><a href="#team" class="l-navigation__link">L'équipe</a></li>
           <li><a href="#partners" class="l-navigation__link">Les partenaires</a></li>
         </ul>
+        <RouterLink to="/cookie">Go to cookie</RouterLink>
       </nav>
-
       <!-- Support Button -->
       <a :href="supportLink" class="c-waterdrop l-header__waterdrop">
-        <svg class="c-waterdrop__icon">
+        <!-- <svg class="c-waterdrop__icon">
           <use xlink:href="https://www.raceforwater.org/app/themes/default/assets/images/sprite-c99f74a38c.svg#sprite-icon-hydrogene"></use>
-        </svg>
+        </svg> -->
         {{ supportText }}
       </a>
     </div>
