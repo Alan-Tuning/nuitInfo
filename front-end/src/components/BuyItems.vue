@@ -15,13 +15,13 @@ const props = defineProps({
 const emit = defineEmits(['buy-upgrade']);
 
 const items = ref([
-    { id: 1, name: 'Champignon qui mange plastique', price: 1.99, bonus: 1, count: 0 },
-    { id: 2, name: 'Jacques-Yves Cousteau', price: 999.50, bonus: 5, count: 0 },
-    { id: 3, name: 'DeLorean qui consomme les déchets', price: 1499.00, bonus: 10, count: 0 },
-    { id: 4, name: 'Hugues Aufray qui chante', price: 0.99, bonus: 2, count: 0 },
-    { id: 5, name: 'Un bateau de nettoyage', price: 2999.99, bonus: 20, count: 0 },
-    { id: 6, name: 'Renaud c\'est la mer qui prend l\'homme TATATA', price: 0.99, bonus: 1, count: 0 },
-    { id: 7, name: 'Le paradis', price: 6000000, bonus: -45, count: 0 },
+    { id: 1, name: 'Champignon qui mange plastique', price: 1.99, bonus: 1, count: 0, img: "src/assets/champignon.png" },
+    { id: 2, name: 'Jacques-Yves Cousteau', price: 999.50, bonus: 5, count: 0, img: "src/assets/cousteau.png" },
+    { id: 3, name: 'DeLorean qui consomme les déchets', price: 1499.00, bonus: 10, count: 0, img: "src/assets/dolorean.png" },
+    { id: 4, name: 'Hugues Aufray qui chante', price: 0.99, bonus: 2, count: 0, img: "src/assets/Hugues.png" },
+    { id: 5, name: 'Un bateau de nettoyage', price: 2999.99, bonus: 20, count: 0, img: "src/assets/bateau.png" },
+    { id: 6, name: 'Renaud c\'est la mer qui prend l\'homme TATATA', price: 0.99, bonus: 1, count: 0, img: "src/assets/Renaud.png" },
+    { id: 7, name: 'Le paradis', price: 6000000, bonus: -45, count: 0, img: "src/assets/paradis.png" },
 ]);
 
 const selectedItem = ref('');
@@ -89,7 +89,8 @@ const cancelPurchase = () => {
             <div v-for="item in items" :key="item.id" class="item" @click="selectItem(item)" :class="{
                 selected: item.name === selectedItem,
                 disabled: item.price > points
-            }">
+            }" style="text-align : left">
+                <img :src="item.img" height=40 width=40>
                 {{ item.name }} - {{ item.price }} €
                 <span v-if="item.count > 0"> (Acheté : {{ item.count }} fois)</span>
             </div>
